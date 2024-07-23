@@ -3,11 +3,15 @@ import { Sun, RefreshCcw } from "lucide-react";
 import HomeButton from "./_components/HomeButton";
 import ThemeSwitch from "./_components/ThemeSwitch";
 
+
+export const revalidate = 3600
+
+
 export default function Layout({children}: Readonly<{children: React.ReactNode}>) {
     return (
         <>
             <header>
-                <Flex align='center' justify='between' p='3' gap='3'>
+                <Flex align='center' justify='between' px='5' py='3' gap='3'>
                     <Flex align='baseline' gap='3'>
                         <Text><Strong>TOMX</Strong> blog</Text>
                         <HomeButton />

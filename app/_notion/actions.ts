@@ -1,9 +1,10 @@
 'use server'
 import { Client, isFullPage } from '@notionhq/client';
 import { NotionToMarkdown } from 'notion-to-md';
+import { cache } from 'react';
 
 
-export async function getMarkdown(pageId: string) {
+export const getMarkdown = cache(async (pageId: string) => {
     const notionClient = new Client({ auth: process.env.NOTION_API_KEY });
     const notionMdClient = new NotionToMarkdown({ notionClient });
 
@@ -11,10 +12,10 @@ export async function getMarkdown(pageId: string) {
     const mdString = notionMdClient.toMarkdownString(mdBlocks).parent;
 
     return mdString;
-}
+})
 
 
-export async function getArticlesPagesIds() {
+export const getArticlesPagesIds = cache(async () => {
     const notionClient   = new Client({ auth: process.env.NOTION_API_KEY });
 
     const response = await notionClient.databases.query({
@@ -30,10 +31,10 @@ export async function getArticlesPagesIds() {
     }
 
     return pageIds;
-}
+})
 
 
-export async function getNotionPage(pageId: string) {
+export const getNotionPage = cache(async (pageId: string) => {
     const notionClient = new Client({ auth: process.env.NOTION_API_KEY });
     const response = await notionClient.pages.retrieve({ page_id: pageId });
 
@@ -42,10 +43,10 @@ export async function getNotionPage(pageId: string) {
     }
 
     return response;
-}
+})
 
 
-export async function getPageTitle(pageId: string) {
+export const getPageTitle = cache(async (pageId: string) => {
     const notionClient = new Client({ auth: process.env.NOTION_API_KEY });
 
     const response = await notionClient.pages.properties.retrieve(
@@ -56,10 +57,38 @@ export async function getPageTitle(pageId: string) {
     const title = responseAny.results[0].title.text.content;
 
     return title;
-}
+})
+
+export const  getPageCoverImageUrl = cache(async (pageId: string) => {
+    const page = await getNotionPage(pageId);
+    
+     if (!page.cover) {
+            return undefined;
+    } else {
+        if (page.cover.type === 'external') {
+            return page.cover.external.url;
+        } else if (page.cover.type === 'file') {
+            return page.cover.file.url;
+        }
+    }
+})
+
+export const getPageEmoji = cache(async (pageId: string) => {
+    const page = await getNotionPage(pageId);
+
+    if (!page.icon) {
+        return null;
+    } else {
+        if (page.icon.type === 'emoji') {
+            return page.icon.emoji;
+        }
+    }
+
+    return null;
+})
 
 
-export async function getDate(pageId: string): Promise<Date> {
+export const getDate = cache(async (pageId: string) => {
     const notionClient = new Client({ auth: process.env.NOTION_API_KEY });
 
     const response = await notionClient.pages.properties.retrieve(
@@ -71,16 +100,16 @@ export async function getDate(pageId: string): Promise<Date> {
     const date = new Date(rawDate);
 
     return date;
-}
+})
 
 
-interface Tag {
+export interface Tag {
     id: string,
     name: string,
     color: string
 }
 
-export async function getTags(pageId: string) {
+export const getTags = cache(async (pageId: string) => {
     const notionClient = new Client({ auth: process.env.NOTION_API_KEY });
 
     const response = await notionClient.pages.properties.retrieve(
@@ -91,4 +120,4 @@ export async function getTags(pageId: string) {
     const tags = responseAny.multi_select as Tag[];
 
     return tags;
-}
+})

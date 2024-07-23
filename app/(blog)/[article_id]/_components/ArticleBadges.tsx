@@ -10,7 +10,7 @@ async function ArticleBadgesS({ article_id }: { article_id: string }) {
         <Flex gap='2' align='center' wrap='wrap'>
             {tags.map(tag => (
                 // color={tag.color as any}
-                <Badge key={tag.id} variant='outline' radius='full'>{tag.name}</Badge>
+                <Badge key={tag.id} variant='surface' radius='full' color={tag.color as any}>{tag.name}</Badge>
             ))}
         </Flex>
     )

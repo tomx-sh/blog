@@ -5,6 +5,8 @@ import ArticleTitle from './_components/ArticleTitle';
 import ArticleBadges from './_components/ArticleBadges';
 import ArticleContent from './_components/ArticleContent';
 import { ChevronLeft, ChevronUp } from 'lucide-react';
+import ArticleCover from './_components/ArticleCover';
+import ArticleEmoji from './_components/ArticleEmoji';
 
 
 export default async function Page({ params }: { params: {article_id: string}}) {
@@ -12,9 +14,14 @@ export default async function Page({ params }: { params: {article_id: string}}) 
     return (
         <Container size='2' mx='5'>
 
-            <Section>
+            <ArticleCover article_id={params.article_id} />
 
-                <ArticleTitle article_id={params.article_id} />
+            <Section pt='4'>
+
+                <Flex gap='2' align='baseline'>
+                    <ArticleEmoji article_id={params.article_id} size='8' />
+                    <ArticleTitle article_id={params.article_id} />
+                </Flex>
 
                 <Separator size='4' my='4'/>
 

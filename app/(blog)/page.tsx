@@ -1,26 +1,28 @@
-import { getArticlesPagesIds, getPageTitle } from '../_notion/actions';
+import { getArticlesPagesIds } from '../_notion/actions';
 import Link from 'next/link';
-import { Container, Section } from '@radix-ui/themes';
+import { Container, Section, Card, Inset, Text, Grid, Heading, Link as RadixLink } from '@radix-ui/themes';
+import ArticleThumbnail from './_components/ArticleThumbnail';
+
 
 
 export default async function Home() {
     const pageIds = await getArticlesPagesIds();
-    const titles = await Promise.all(pageIds.map(getPageTitle));
 
     return (
         <Container size='3' mx='5'>
             <Section>
-                
-            <h1>Articles</h1>
-            <ul>
-                {titles.map((title, index) => (
-                    <li key={index}>
-                        <Link href={`/${pageIds[index]}`}>
-                            {title}
+                <Heading as='h1' size='8' mb='5'>Posts</Heading>
+
+                <Grid gap='5' columns='repeat(auto-fill, minmax(300px, 1fr))'>
+                    {pageIds.map((pageId, index) => (
+                        <Link href={`/${pageId}`} key={index} style={{ all: 'unset' }}>
+                            <RadixLink asChild>
+                                <ArticleThumbnail article_id={pageId}/>
+                            </RadixLink>
                         </Link>
-                    </li>
-                ))}
-            </ul>
+                    ))}
+                </Grid>
+
             </Section>
         </Container>
 
