@@ -1,6 +1,7 @@
 import { Separator, Link, Flex, Text, Strong, IconButton, Tooltip } from "@radix-ui/themes";
 import { Sun, RefreshCcw } from "lucide-react";
 import HomeButton from "./_components/HomeButton";
+import ThemeSwitch from "./_components/ThemeSwitch";
 
 export default function Layout({children}: Readonly<{children: React.ReactNode}>) {
     return (
@@ -13,9 +14,7 @@ export default function Layout({children}: Readonly<{children: React.ReactNode}>
                     </Flex>
 
                     <Flex gap='3'>
-                        <Tooltip content='Toggle dark mode'>
-                            <IconButton variant='ghost' size='1'><Sun size='16' /></IconButton>
-                        </Tooltip>
+                        <ThemeSwitch />
 
                         <Tooltip content='Refresh cache'>
                             <IconButton variant='ghost' size='1'><RefreshCcw size='16'/></IconButton>
