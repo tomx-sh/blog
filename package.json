@@ -9,16 +9,24 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@notionhq/client": "^2.2.15",
+    "@radix-ui/themes": "^3.1.1",
+    "lucide-react": "^0.414.0",
+    "next": "14.2.5",
+    "next-mdx-remote": "^5.0.0",
+    "next-themes": "^0.3.0",
+    "notion-to-md": "^3.1.1",
+    "prism-react-renderer": "^2.3.1",
     "react": "^18",
-    "react-dom": "^18",
-    "next": "14.2.5"
+    "react-code-block": "^1.0.0",
+    "react-dom": "^18"
   },
   "devDependencies": {
-    "typescript": "^5",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^8",
-    "eslint-config-next": "14.2.5"
+    "eslint-config-next": "14.2.5",
+    "typescript": "^5"
   }
 }
