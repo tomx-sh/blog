@@ -1,7 +1,8 @@
-import { Separator, Link, Flex, Text, Strong, IconButton, Tooltip } from "@radix-ui/themes";
+import { Separator, Flex, Text, Strong, IconButton, Tooltip } from "@radix-ui/themes";
 import { Sun, RefreshCcw } from "lucide-react";
 import HomeButton from "./_components/HomeButton";
 import ThemeSwitch from "./_components/ThemeSwitch";
+import Link from "./_components/Link";
 
 
 export const revalidate = 3600
@@ -12,10 +13,12 @@ export default function Layout({children}: Readonly<{children: React.ReactNode}>
         <>
             <header>
                 <Flex align='center' justify='between' px='5' py='3' gap='3'>
-                    <Flex align='baseline' gap='3'>
-                        <Text><Strong>TOMX</Strong> blog</Text>
-                        <HomeButton />
-                    </Flex>
+
+                    <Tooltip content='see all posts'>
+                        <Link href='/' size='3' highContrast underline='hover'>
+                            <Text><Strong>TOMX</Strong> blog</Text>
+                        </Link>
+                    </Tooltip>
 
                     <Flex gap='3'>
                         <ThemeSwitch />

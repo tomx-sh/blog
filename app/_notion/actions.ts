@@ -20,7 +20,8 @@ export const getArticlesPagesIds = cache(async () => {
 
     const response = await notionClient.databases.query({
         database_id: process.env.NOTION_DB_ID!,
-        filter: { property: 'Publier', checkbox: { equals: true } }
+        filter: { property: 'Publier', checkbox: { equals: true } },
+        sorts: [{ property: 'Date', direction: 'descending' }]
     });
 
     const pageIds: string[] = [];
@@ -32,6 +33,34 @@ export const getArticlesPagesIds = cache(async () => {
 
     return pageIds;
 })
+
+
+export const getFeaturedArticlesPagesIds = cache(async () => {
+    const notionClient = new Client({ auth: process.env.NOTION_API_KEY });
+
+    const response = await notionClient.databases.query({
+        database_id: process.env.NOTION_DB_ID!,
+        filter: {
+            and: [
+                { property: 'Publier', checkbox: { equals: true } },
+                { property: 'Featured', checkbox: { equals: true } }
+            ]
+        }
+    });
+
+    const pageIds: string[] = [];
+    for (const page of response.results) {
+        if (isFullPage(page)) {
+            pageIds.push(page.id);
+        }
+    }
+
+    return pageIds;
+})
+
+
+
+
 
 
 export const getNotionPage = cache(async (pageId: string) => {
@@ -69,6 +98,23 @@ export const  getPageCoverImageUrl = cache(async (pageId: string) => {
             return page.cover.external.url;
         } else if (page.cover.type === 'file') {
             return page.cover.file.url;
+        }
+    }
+})
+
+export const getDatabaseCoverImageUrl = cache(async () => {
+    const notionClient = new Client({ auth: process.env.NOTION_API_KEY });
+
+    const response = await notionClient.databases.retrieve({ database_id: process.env.NOTION_DB_ID! });
+    const responseAny = response as any; // Unfortunatelly Notion's API doesn't provide a handy type for this response
+
+    if (!responseAny.cover) {
+        return undefined;
+    } else {
+        if (responseAny.cover.type === 'external') {
+            return responseAny.cover.external.url;
+        } else if (responseAny.cover.type === 'file') {
+            return responseAny.cover.file.url;
         }
     }
 })

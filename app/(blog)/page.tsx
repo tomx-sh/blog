@@ -1,27 +1,42 @@
-import { getArticlesPagesIds } from '../_notion/actions';
-import Link from 'next/link';
-import { Container, Section, Card, Inset, Text, Grid, Heading, Link as RadixLink } from '@radix-ui/themes';
+import { getArticlesPagesIds, getFeaturedArticlesPagesIds } from '../_notion/actions';
+import { Container, Section, Grid, Heading, Flex, Separator } from '@radix-ui/themes';
 import ArticleThumbnail from './_components/ArticleThumbnail';
+import PageCover from './[article_id]/_components/PageCover';
+import ArticleRow from './_components/ArticleRow';
 
 
 
 export default async function Home() {
-    const pageIds = await getArticlesPagesIds();
+    const featuredArticleIds = await getFeaturedArticlesPagesIds();
+    const articleIds = await getArticlesPagesIds();
 
     return (
         <Container size='3' mx='5'>
+
+            <PageCover type='database' />
+
             <Section>
-                <Heading as='h1' size='8' mb='5'>Posts</Heading>
+                <Heading as='h1' size='8' mb='5'>Featured</Heading>
 
                 <Grid gap='5' columns='repeat(auto-fill, minmax(300px, 1fr))'>
-                    {pageIds.map((pageId, index) => (
-                        <Link href={`/${pageId}`} key={index} style={{ all: 'unset' }}>
-                            <RadixLink asChild>
-                                <ArticleThumbnail article_id={pageId}/>
-                            </RadixLink>
-                        </Link>
+                    {featuredArticleIds.map((pageId, index) => (
+                        <ArticleThumbnail article_id={pageId} key={pageId}/>
                     ))}
                 </Grid>
+
+            </Section>
+
+            <Section>
+
+                <Heading as='h1' size='8' mb='5'>All posts</Heading>
+
+                <Flex direction='column' gap='3'>
+                    {
+                        articleIds.map((pageId, index) => (
+                            <ArticleRow article_id={pageId} key={pageId} />
+                        ))
+                    }
+                </Flex>
 
             </Section>
         </Container>

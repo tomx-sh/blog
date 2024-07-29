@@ -3,6 +3,7 @@ import { Card, Inset, Text, Badge, Flex, Skeleton, Heading } from "@radix-ui/the
 import { getDate, getTags, getPageCoverImageUrl, getPageTitle } from "@/app/_notion/actions";
 import React, { Suspense } from "react";
 import ArticleEmoji from "../[article_id]/_components/ArticleEmoji";
+import Link from "next/link";
 
 
 interface ArticleThumbnailProps {
@@ -11,32 +12,35 @@ interface ArticleThumbnailProps {
     tags: Tag[];
     date: Date;
     emoji: React.ReactNode;
+    href?: string;
 }
 
 
-function ArticleThumbnailA({ title, coverImageUrl, tags, date, emoji }: ArticleThumbnailProps) {
+function ArticleThumbnailA({ title, coverImageUrl, tags, date, emoji, href }: ArticleThumbnailProps) {
     return (
-        <Card style={{height:'100%'}}>
-            <Inset clip="padding-box" side="top" pb="current">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={coverImageUrl} alt='Cover image' width={'100%'} height={100} style={{objectFit: 'cover'}}/>
-            </Inset>
+        <Card variant='classic' style={{height:'100%'}} asChild>
+            <Link href={href || '#'}> 
+                <Inset clip="padding-box" side="top" pb="current">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={coverImageUrl} alt='Cover image' width={'100%'} height={100} style={{objectFit: 'cover'}}/>
+                </Inset>
 
-            <Flex gap='2' align='baseline' >
-                {emoji}
-                <Heading as='h2' size='3' mb='3'>{title}</Heading>
-            </Flex>
-
-            <Flex gap='2' align='end' wrap='wrap' justify='between'>
-                <Flex gap='2' align='center' wrap='wrap'>
-                    {tags.map(tag => (
-                        <Badge key={tag.id} variant='surface' radius='full' color={tag.color as any}>{tag.name}</Badge>
-                    ))}
+                <Flex gap='2' align='baseline' >
+                    {emoji}
+                    <Heading as='h2' size='3' mb='3'>{title}</Heading>
                 </Flex>
 
-                <Text as='p' size='1' color='gray'>{date.toDateString()}</Text>
-            </Flex>
-            
+                <Flex gap='2' align='end' wrap='wrap' justify='between'>
+                    <Flex gap='2' align='center' wrap='wrap'>
+                        {tags.map(tag => (
+                            <Badge key={tag.id} variant='surface' radius='full' color={tag.color as any}>{tag.name}</Badge>
+                        ))}
+                    </Flex>
+
+                    <Text as='p' size='1' color='gray'>{date.toDateString()}</Text>
+                </Flex>
+                
+            </Link>
         </Card>
     )
 }
@@ -73,7 +77,7 @@ async function ArticleThumbnailS({ article_id }: { article_id: string }) {
     const date = await getDate(article_id);
     const emoji = <ArticleEmoji article_id={article_id} />;
 
-    return <ArticleThumbnailA title={title} coverImageUrl={coverImageUrl} tags={tags} date={date} emoji={emoji}/>;
+    return <ArticleThumbnailA title={title} coverImageUrl={coverImageUrl} tags={tags} date={date} emoji={emoji} href={`/${article_id}`} />
 }
 
 

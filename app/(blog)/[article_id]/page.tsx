@@ -4,9 +4,11 @@ import ArticleDate from './_components/ArticleDate';
 import ArticleTitle from './_components/ArticleTitle';
 import ArticleBadges from './_components/ArticleBadges';
 import ArticleContent from './_components/ArticleContent';
-import { ChevronLeft, ChevronUp } from 'lucide-react';
-import ArticleCover from './_components/ArticleCover';
+import { ChevronLeft, ChevronUp, ChevronsLeft } from 'lucide-react';
+import PageCover from './_components/PageCover';
 import ArticleEmoji from './_components/ArticleEmoji';
+import HomeButton from '../_components/HomeButton';
+import NextArticles from './_components/NextArticles';
 
 
 export default async function Page({ params }: { params: {article_id: string}}) {
@@ -14,7 +16,7 @@ export default async function Page({ params }: { params: {article_id: string}}) 
     return (
         <Container size='2' mx='5'>
 
-            <ArticleCover article_id={params.article_id} />
+            <PageCover type='page' id={params.article_id} />
 
             <Section pt='4'>
 
@@ -39,12 +41,12 @@ export default async function Page({ params }: { params: {article_id: string}}) 
                 <Separator size='4' my='4'/>
 
                 <Flex justify='between' align='center'>
-                    <Heading as='h3' size='5' mt='2' color='gray'>{`What's next`}</Heading>
+                    <Heading as='h3' size='5' color='gray'>{`What's next`}</Heading>
 
-                    <Flex gap='2'>
+                    <Flex gap='2' align='center'>
                         <Button size='2' asChild highContrast>
                             <Link href='/'>
-                                <ChevronLeft size='20'/>
+                                <ChevronsLeft size='20'/>
                                 see all posts
                             </Link>
                         </Button>
@@ -58,11 +60,7 @@ export default async function Page({ params }: { params: {article_id: string}}) 
                     </Flex>
                 </Flex>
 
-                <Grid gap='4' mt='4' columns='repeat(auto-fill, minmax(200px, 1fr))'>
-                    <Card variant='classic' style={{aspectRatio:'16/9'}}/>
-                    <Card variant='classic' style={{ aspectRatio: '16/9' }} />
-                    <Card variant='classic' style={{ aspectRatio: '16/9' }} />
-                </Grid>
+                <NextArticles currentArticleId={params.article_id} />
 
 
                 <Heading as='h3' size='3' color='gray' weight='regular' mt='5'>About the author</Heading>
