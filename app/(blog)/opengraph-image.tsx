@@ -35,7 +35,7 @@ export default async function Image() {
 
     return new ImageResponse(
         (
-            <div style={{ width: '100%', height: '100%' }}>
+            <div style={{ width: '100%', height: '100%', display: 'flex'}}>
                 <p>Hello (Home)</p>
             </div>
         ),
