@@ -1,5 +1,5 @@
 import { Grid, Card, Inset, AspectRatio, Heading, Box, Flex } from "@radix-ui/themes";
-import { getArticlesPagesIds, getPageCoverImageUrl, getPageTitle } from "@/app/_actions/actions";
+import { getArticlesPagesIds, getPageCoverImageUrl, getPageTitle } from "@/app/_actions/notion";
 import Image from "next/image";
 import Link from "next/link";
 

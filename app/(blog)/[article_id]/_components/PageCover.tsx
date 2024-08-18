@@ -1,4 +1,4 @@
-import { getPageCoverImageUrl, getDatabaseCoverImageUrl } from "@/app/_actions/actions";
+import { getPageCoverImageUrl, getDatabaseCoverImageUrl } from "@/app/_actions/notion";
 import { Skeleton, BoxProps, Box } from "@radix-ui/themes";
 import { Suspense } from "react";
 import Image from "next/image";

@@ -1,6 +1,6 @@
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import customComponents from './CustomComponents';
-import { getMarkdown } from '@/app/_actions/actions';
+import { getMarkdown } from '@/app/_actions/notion';
 import { Skeleton, Text } from '@radix-ui/themes';
 import { Suspense } from 'react';
 

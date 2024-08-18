@@ -1,4 +1,4 @@
-import { getTags } from "@/app/_actions/actions";
+import { getTags } from "@/app/_actions/notion";
 import { Badge, Flex, Skeleton } from "@radix-ui/themes";
 import { Suspense } from "react";
 
