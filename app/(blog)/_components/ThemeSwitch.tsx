@@ -8,9 +8,9 @@ import { useEffect } from "react"
 export default function ThemeSwitch() {
     const { theme, systemTheme, resolvedTheme, setTheme } = useTheme()
 
-    useEffect(() => {
+    /*useEffect(() => {
         console.log(`Theme set to ${theme}${theme == 'system' ? ` (${resolvedTheme})` : ''}`)
-    }, [theme, resolvedTheme])
+    }, [theme, resolvedTheme])*/
 
     function handleClick() {
         if (theme == 'system' && systemTheme == 'dark') {

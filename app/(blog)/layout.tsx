@@ -1,12 +1,7 @@
-import { Separator, Flex, Text, Strong, IconButton, Tooltip } from "@radix-ui/themes";
-import { Sun, RefreshCcw } from "lucide-react";
-import HomeButton from "./_components/HomeButton";
+import { Separator, Flex, Text, Strong, Tooltip } from "@radix-ui/themes";
 import ThemeSwitch from "./_components/ThemeSwitch";
 import Link from "./_components/Link";
 import Refresh from "./_components/Refresh";
-
-
-export const revalidate = 3600
 
 
 export default function Layout({children}: Readonly<{children: React.ReactNode}>) {

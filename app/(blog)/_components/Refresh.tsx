@@ -14,23 +14,16 @@ export default function Refresh() {
 
     const handleClick = async () => {
         setLoading(true);
-
-        console.log('Refreshing cache for', pathname);
-
         clearCache(pathname).then(() => {
-            console.log('Cache cleared');
-
             startTransition(() => {   
-                console.log('Refreshing page...'); 
                 router.refresh();
             });
-
             setLoading(false);
         })
     }
 
     return (
-        <Tooltip content='Refresh cache'>
+        <Tooltip content='Fetch latest data'>
             <IconButton
                 variant='ghost'
                 size='1'
