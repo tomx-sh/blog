@@ -9,6 +9,7 @@ import './globals.css';
 export const metadata: Metadata = {
     title: "blog",
     description: "tomx personal blog",
+    metadataBase: new URL('https://blog.tomx.sh'),
 };
 
 export default function RootLayout({children}: Readonly<{children: React.ReactNode}>) {
