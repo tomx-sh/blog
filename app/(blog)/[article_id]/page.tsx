@@ -9,7 +9,7 @@ import PageCover from './_components/PageCover';
 import ArticleEmoji from './_components/ArticleEmoji';
 import HomeButton from '../_components/HomeButton';
 import NextArticles from './_components/NextArticles';
-import { getArticlesPagesIds } from '@/app/_notion/actions';
+import { getArticlesPagesIds } from '@/app/_actions/notion';
 
 
 

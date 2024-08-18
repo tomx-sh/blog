@@ -1,4 +1,4 @@
-import { getDate } from "@/app/_notion/actions";
+import { getDate } from "@/app/_actions/actions";
 import { Text, Skeleton } from "@radix-ui/themes";
 import { Suspense } from "react";
 

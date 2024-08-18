@@ -2,6 +2,7 @@
 import { Client, isFullPage } from '@notionhq/client';
 import { NotionToMarkdown } from 'notion-to-md';
 import { cache } from 'react';
+import { revalidatePath } from 'next/cache';
 
 
 export const getMarkdown = cache(async (pageId: string) => {
@@ -59,10 +60,6 @@ export const getFeaturedArticlesPagesIds = cache(async () => {
 })
 
 
-
-
-
-
 export const getNotionPage = cache(async (pageId: string) => {
     const notionClient = new Client({ auth: process.env.NOTION_API_KEY });
     const response = await notionClient.pages.retrieve({ page_id: pageId });
@@ -88,6 +85,7 @@ export const getPageTitle = cache(async (pageId: string) => {
     return title;
 })
 
+
 export const  getPageCoverImageUrl = cache(async (pageId: string) => {
     const page = await getNotionPage(pageId);
     
@@ -101,6 +99,7 @@ export const  getPageCoverImageUrl = cache(async (pageId: string) => {
         }
     }
 })
+
 
 export const getDatabaseCoverImageUrl = cache(async () => {
     const notionClient = new Client({ auth: process.env.NOTION_API_KEY });
@@ -120,6 +119,7 @@ export const getDatabaseCoverImageUrl = cache(async () => {
         }
     }
 })
+
 
 export const getPageEmoji = cache(async (pageId: string) => {
     const page = await getNotionPage(pageId);
@@ -157,6 +157,7 @@ export interface Tag {
     color: string
 }
 
+
 export const getTags = cache(async (pageId: string) => {
     const notionClient = new Client({ auth: process.env.NOTION_API_KEY });
 
@@ -169,3 +170,9 @@ export const getTags = cache(async (pageId: string) => {
 
     return tags;
 })
+
+
+export const clearCache = (path: string) => {
+    revalidatePath(path);
+    return true;
+}
