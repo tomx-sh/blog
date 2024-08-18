@@ -1,14 +1,15 @@
 import { Tag } from "@/app/_notion/actions";
-import { Card, Inset, Text, Badge, Flex, Skeleton, Heading } from "@radix-ui/themes";
+import { Card, Inset, Text, Badge, Flex, Skeleton, Heading, Box } from "@radix-ui/themes";
 import { getDate, getTags, getPageCoverImageUrl, getPageTitle } from "@/app/_notion/actions";
 import React, { Suspense } from "react";
 import ArticleEmoji from "../[article_id]/_components/ArticleEmoji";
 import Link from "next/link";
+import Image from "next/image";
 
 
 interface ArticleThumbnailProps {
     title: string;
-    coverImageUrl?: string;
+    coverImageUrl: string;
     tags: Tag[];
     date: Date;
     emoji: React.ReactNode;
@@ -18,28 +19,38 @@ interface ArticleThumbnailProps {
 
 function ArticleThumbnailA({ title, coverImageUrl, tags, date, emoji, href }: ArticleThumbnailProps) {
     return (
-        <Card variant='classic' style={{height:'100%'}} asChild>
+        <Card asChild>
             <Link href={href || '#'}> 
-                <Inset clip="padding-box" side="top" pb="current">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={coverImageUrl} alt='Cover image' width={'100%'} height={100} style={{objectFit: 'cover'}}/>
-                </Inset>
+                <Flex direction='column' height='100%' justify='between' gap='2'>
 
-                <Flex gap='2' align='baseline' >
-                    {emoji}
-                    <Heading as='h2' size='3' mb='3'>{title}</Heading>
-                </Flex>
 
-                <Flex gap='2' align='end' wrap='wrap' justify='between'>
-                    <Flex gap='2' align='center' wrap='wrap'>
-                        {tags.map(tag => (
-                            <Badge key={tag.id} variant='surface' radius='full' color={tag.color as any}>{tag.name}</Badge>
-                        ))}
+                    <Flex direction='column'>
+                        <Inset clip="padding-box" side="top" pb="current">
+                            <Box position='relative' height='100px' width='100%'>
+                                <Image src={coverImageUrl} alt='Cover image' layout='fill' objectFit='cover'/>
+                            </Box>
+                        </Inset>
+
+                        <Flex gap='2' align='baseline' >
+                            {emoji}
+                            <Heading as='h2' size='3'>{title}</Heading>
+                        </Flex>
                     </Flex>
 
-                    <Text as='p' size='1' color='gray'>{date.toDateString()}</Text>
+
+
+                    <Flex gap='2' align='end' wrap='wrap' justify='between'>
+                        <Flex gap='2' align='center' wrap='wrap'>
+                            {tags.map(tag => (
+                                <Badge key={tag.id} variant='surface' radius='full' color={tag.color as any}>{tag.name}</Badge>
+                            ))}
+                        </Flex>
+
+                        <Text as='p' size='1' color='gray'>{date.toDateString()}</Text>
+                    </Flex>
+
+                    
                 </Flex>
-                
             </Link>
         </Card>
     )
@@ -72,7 +83,7 @@ function ArticleThumbnailSkeleton() {
 
 async function ArticleThumbnailS({ article_id }: { article_id: string }) {
     const title = await getPageTitle(article_id);
-    const coverImageUrl = await getPageCoverImageUrl(article_id);
+    const coverImageUrl = await getPageCoverImageUrl(article_id) || 'https://pbs.twimg.com/profile_banners/200216115/1713358979/1500x500';
     const tags = await getTags(article_id);
     const date = await getDate(article_id);
     const emoji = <ArticleEmoji article_id={article_id} />;

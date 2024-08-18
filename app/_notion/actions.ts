@@ -108,6 +108,8 @@ export const getDatabaseCoverImageUrl = cache(async () => {
     const response = await notionClient.databases.retrieve({ database_id: process.env.NOTION_DB_ID! });
     const responseAny = response as any; // Unfortunatelly Notion's API doesn't provide a handy type for this response
 
+    response.properties.cover
+
     if (!responseAny.cover) {
         return undefined;
     } else {

@@ -13,7 +13,7 @@ export default async function Home() {
     return (
         <Container size='3' mx='5'>
 
-            <PageCover type='database' />
+            <PageCover type='database' width='100%' height='200px'/>
 
             <Section>
                 <Heading as='h1' size='8' mb='5'>Featured</Heading>

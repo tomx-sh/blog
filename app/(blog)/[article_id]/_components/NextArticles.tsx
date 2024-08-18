@@ -1,4 +1,4 @@
-import { Grid, Card, Inset, AspectRatio, Heading } from "@radix-ui/themes";
+import { Grid, Card, Inset, AspectRatio, Heading, Box, Flex } from "@radix-ui/themes";
 import { getArticlesPagesIds, getPageCoverImageUrl, getPageTitle } from "@/app/_notion/actions";
 import Image from "next/image";
 import Link from "next/link";
@@ -15,25 +15,28 @@ interface NextArticleThumbnailProps {
 
 
 async function NextArticleThumbnail({ articleId }: NextArticleThumbnailProps) {
-    const coverImageUrl = await getPageCoverImageUrl(articleId);
+    const coverImageUrl = await getPageCoverImageUrl(articleId) || 'https://pbs.twimg.com/profile_banners/200216115/1713358979/1500x500';
     const title = await getPageTitle(articleId);
     return (
-        <Card variant='classic' style={{aspectRatio:'16/9'}} asChild>
+        <Card asChild>
             <Link href={`/${articleId}`}>
 
-                <Inset>
-                    <Image
-                        src={coverImageUrl || '/'}
-                        alt='Cover image'
-                        layout='fill'
-                        objectFit='cover'
-                        style={{filter: 'grayscale(1)'}}
-                    />
+
+                <Inset clip="padding-box" side="top" pb="current">
+                    <Box position='relative' width='100%' height='80px'>
+                        <Image
+                            src={coverImageUrl}
+                            alt='Cover image'
+                            layout='fill'
+                            objectFit='cover'
+                            //style={{filter: 'grayscale(1)'}}
+                        />
+                    </Box>
                 </Inset>
 
-                <Heading as='h3' size='2' mt='2'>{title}</Heading>
 
-            
+                <Heading as='h3' size='2'>{title}</Heading>
+
             </Link>
         </Card>
     )

@@ -34,7 +34,7 @@ function CustomPre(props: any) {
 }
 
 function CustomParagraph(props: any) {
-    return <p className={lora.className} style={{color:'var(--gray-12)', textAlign: 'justify', margin: 'var(--space-5) 0' }}>{props.children}</p>
+    return <p className={lora.className} style={{color:'var(--gray-12)', textAlign: 'justify', margin: 'var(--space-3) 0' }}>{props.children}</p>
 }
 
 function CustomImage(props: any) {
@@ -43,23 +43,23 @@ function CustomImage(props: any) {
 }
 
 function CustomH1(props: any) {
-    return <Heading as='h1' size='8' mt='3'>{props.children}</Heading>
+    return <Heading as='h1' size='8' mt='75px'>{props.children}</Heading>
 }
 
 function CustomH2(props: any) {
-    return <Heading as='h2' size='7' mt='2' color='gray'>{props.children}</Heading>
+    return <Heading as='h2' size='7' mt='50px'>{props.children}</Heading>
 }
 
 function CustomH3(props: any) {
-    return <Heading as='h3' size='6' mt='1' color='gray'>{props.children}</Heading>
+    return <Heading as='h3' size='4' mt='25px'>{props.children}</Heading>
 }
 
 function CustomOl(props: any) {
-    return <ol className={lora.className} style={{ paddingInlineStart: '40px', margin: 'var(--space-5) 0'}}>{props.children}</ol>
+    return <ol className={lora.className} style={{ paddingInlineStart: '40px', margin: 'var(--space-3) 0'}}>{props.children}</ol>
 }
 
 function CustomUl(props: any) {
-    return <ul className={lora.className} style={{ paddingInlineStart: '40px', margin: 'var(--space-5) 0'}}>{props.children}</ul>
+    return <ul className={lora.className} style={{ paddingInlineStart: '40px', margin: 'var(--space-3) 0'}}>{props.children}</ul>
 }
 
 const customComponents = {

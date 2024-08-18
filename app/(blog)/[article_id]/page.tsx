@@ -9,6 +9,14 @@ import PageCover from './_components/PageCover';
 import ArticleEmoji from './_components/ArticleEmoji';
 import HomeButton from '../_components/HomeButton';
 import NextArticles from './_components/NextArticles';
+import { getArticlesPagesIds } from '@/app/_notion/actions';
+
+
+
+export async function generateStaticParams() {
+    const articleIds = await getArticlesPagesIds();
+    return articleIds.map(article_id => ({ params: { article_id } }));
+}
 
 
 export default async function Page({ params }: { params: {article_id: string}}) {
@@ -16,9 +24,9 @@ export default async function Page({ params }: { params: {article_id: string}}) 
     return (
         <Container size='2' mx='5'>
 
-            <PageCover type='page' id={params.article_id} />
+            <PageCover type='page' id={params.article_id} width='100%' height='200px'/>
 
-            <Section pt='4'>
+            <Section py='4'>
 
                 <Flex gap='2' align='baseline'>
                     <ArticleEmoji article_id={params.article_id} size='8' />
