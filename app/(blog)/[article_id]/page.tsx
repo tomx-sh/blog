@@ -80,7 +80,7 @@ export default async function Page({ params }: { params: {article_id: string}}) 
                                 <Heading as='h4' size='2'>Tom</Heading>
                                 <Text as='p' size='2' color='gray'>
                                     I am a software engineer with a cybersecurity background, now specialized in web development.
-                                    I like to write about programming and technology in general.
+                                    I like writing about programming and technology in general.
                                 </Text>
                             </div>
                         </Flex>
