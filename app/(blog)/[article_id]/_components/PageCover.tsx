@@ -8,7 +8,11 @@ type PageCoverProps = ({ type: 'database' } | { type: 'page', id: string }) & Bo
 
 
 async function PageCoverS({ ...props }: PageCoverProps) {
-    const coverImageUrl = props.type === 'database' ? await getDatabaseCoverImageUrl() : await getPageCoverImageUrl(props.id);
+    const coverImageUrl = (
+            props.type === 'database' ?
+                await getDatabaseCoverImageUrl() :
+                await getPageCoverImageUrl(props.id)
+    ) || 'https://pbs.twimg.com/profile_banners/200216115/1713358979/1500x500';
 
     return (
         <Box {...props} position='relative' overflow='hidden' style={{
