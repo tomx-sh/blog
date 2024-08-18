@@ -3,6 +3,7 @@ import { Sun, RefreshCcw } from "lucide-react";
 import HomeButton from "./_components/HomeButton";
 import ThemeSwitch from "./_components/ThemeSwitch";
 import Link from "./_components/Link";
+import Refresh from "./_components/Refresh";
 
 
 export const revalidate = 3600
@@ -22,10 +23,7 @@ export default function Layout({children}: Readonly<{children: React.ReactNode}>
 
                     <Flex gap='3'>
                         <ThemeSwitch />
-
-                        <Tooltip content='Refresh cache'>
-                            <IconButton variant='ghost' size='1'><RefreshCcw size='16'/></IconButton>
-                        </Tooltip>
+                        <Refresh />
                     </Flex>
                     
                 </Flex>
