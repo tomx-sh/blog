@@ -1,6 +1,6 @@
 import { ImageResponse } from 'next/og'
-import { getDatabaseCoverImageUrl } from '../_actions/notion'
-import * as NextImage from 'next/image'
+//import { getDatabaseCoverImageUrl } from '../_actions/notion'
+//import * as NextImage from 'next/image'
 
 export const alt = 'TOMX - Blog'
 export const size = {
@@ -10,7 +10,7 @@ export const size = {
 export const contentType = 'image/png'
 
 
-export default async function Image() {
+/*export default async function Image() {
     const coverImageUrl = await getDatabaseCoverImageUrl()
 
     return new ImageResponse(
@@ -22,6 +22,21 @@ export default async function Image() {
                     fill={true}
                     style= {{ objectFit: 'cover' }}
                 />
+            </div>
+        ),
+        {
+            ...size,
+        }
+    )
+}*/
+
+
+export default async function Image() {
+
+    return new ImageResponse(
+        (
+            <div style={{ width: '100%', height: '100%' }}>
+                <p>Hello (Home)</p>
             </div>
         ),
         {
