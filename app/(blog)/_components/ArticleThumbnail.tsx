@@ -27,7 +27,7 @@ function ArticleThumbnailA({ title, coverImageUrl, tags, date, emoji, href }: Ar
                     <Flex direction='column'>
                         <Inset clip="padding-box" side="top" pb="current">
                             <Box position='relative' height='100px' width='100%'>
-                                <Image src={coverImageUrl} alt='Cover image' layout='fill' objectFit='cover'/>
+                                <Image src={coverImageUrl} alt='Cover image'  fill={true} style={{ objectFit: 'cover' }} />
                             </Box>
                         </Inset>
 

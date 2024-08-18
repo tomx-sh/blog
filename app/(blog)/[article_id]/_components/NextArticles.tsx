@@ -27,9 +27,8 @@ async function NextArticleThumbnail({ articleId }: NextArticleThumbnailProps) {
                         <Image
                             src={coverImageUrl}
                             alt='Cover image'
-                            layout='fill'
-                            objectFit='cover'
-                            //style={{filter: 'grayscale(1)'}}
+                            fill={true}
+                            style={{ objectFit: 'cover' }}
                         />
                     </Box>
                 </Inset>

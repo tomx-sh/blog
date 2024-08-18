@@ -20,7 +20,7 @@ async function PageCoverS({ ...props }: PageCoverProps) {
             boxShadow: 'var(--shadow-3)',
         }}>
             { coverImageUrl && 
-                <Image src={coverImageUrl} alt='Cover image'  objectFit='cover' layout='fill' />
+                <Image src={coverImageUrl} alt='Cover image' fill={true} style={{ objectFit: 'cover' }} />
             }
         </Box>
     )

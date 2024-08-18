@@ -73,7 +73,7 @@ export default async function Page({ params }: { params: {article_id: string}}) 
 
                 <Heading as='h3' size='3' color='gray' weight='regular' mt='5'>About the author</Heading>
                 <Card mt='1' size='2' asChild>
-                    <Link href='https://tomx.sh'>
+                    <Link href='https://tomx.sh' prefetch>
                         <Flex gap='3' align='center'>
                             <Avatar size='4' fallback='T' radius='full' src='https://pbs.twimg.com/profile_images/1662912989316493312/OikmnLqo_400x400.jpg' />
                             <div>
