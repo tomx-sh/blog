@@ -10,8 +10,11 @@ export default function Refresh() {
     const pathname = usePathname();
 
     const handleClick = async () => {
-        clearCache(pathname);
-        router.refresh();
+        console.log('Refreshing cache for', pathname);
+        clearCache(pathname).then(() => {
+            router.refresh();
+            console.log('Router refreshed');
+        })
     }
 
     return (

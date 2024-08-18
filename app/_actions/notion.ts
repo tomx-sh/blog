@@ -172,7 +172,7 @@ export const getTags = cache(async (pageId: string) => {
 })
 
 
-export const clearCache = (path: string) => {
+export const clearCache = async (path: string) => {
     revalidatePath(path);
     return true;
 }
