@@ -1,4 +1,4 @@
-import { getArticlesPagesIds, getFeaturedArticlesPagesIds } from '../_actions/notion';
+import { getArticlesPagesIds, getFeaturedArticlesPagesIds } from '../api/notion';
 import { Container, Section, Grid, Heading, Flex, Separator } from '@radix-ui/themes';
 import ArticleThumbnail from './_components/ArticleThumbnail';
 import PageCover from './[article_id]/_components/PageCover';

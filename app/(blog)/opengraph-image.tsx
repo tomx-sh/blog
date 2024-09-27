@@ -1,5 +1,5 @@
 import { ImageResponse } from 'next/og'
-//import { getDatabaseCoverImageUrl } from '../_actions/notion'
+//import { getDatabaseCoverImageUrl } from '../api/notion'
 //import * as NextImage from 'next/image'
 
 export const alt = 'TOMX - Blog'

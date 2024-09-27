@@ -2,7 +2,7 @@
 import { Tooltip, IconButton } from "@radix-ui/themes";
 import { RefreshCcw } from "lucide-react";
 import { useRouter, usePathname } from "next/navigation";
-import { clearCache } from "@/app/_actions/notion";
+import { clearCache } from "@/app/api/notion";
 import { useState, useTransition } from "react";
 
 

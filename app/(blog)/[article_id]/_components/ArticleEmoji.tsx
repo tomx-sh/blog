@@ -1,4 +1,4 @@
-import { getPageEmoji } from "@/app/_actions/notion";
+import { getPageEmoji } from "@/app/api/notion";
 import { Skeleton, Text, TextProps } from "@radix-ui/themes";
 import { Suspense } from "react";
 

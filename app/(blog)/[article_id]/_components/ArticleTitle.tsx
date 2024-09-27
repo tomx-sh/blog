@@ -1,4 +1,4 @@
-import { getPageTitle } from "@/app/_actions/notion";
+import { getPageTitle } from "@/app/api/notion";
 import { Heading, Skeleton } from "@radix-ui/themes";
 import { Suspense } from "react";
 

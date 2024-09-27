@@ -1,4 +1,3 @@
-'use server'
 import { Client, isFullPage } from '@notionhq/client';
 import { NotionToMarkdown } from 'notion-to-md';
 import { cache } from 'react';

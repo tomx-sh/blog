@@ -1,6 +1,6 @@
-import { Tag } from "@/app/_actions/notion";
+import { Tag } from "@/app/api/notion";
 import { Card, Inset, Text, Badge, Flex, Skeleton, Heading, Box, Grid, Link as RadixLink, Separator } from "@radix-ui/themes";
-import { getDate, getTags, getPageCoverImageUrl, getPageTitle } from "@/app/_actions/notion";
+import { getDate, getTags, getPageCoverImageUrl, getPageTitle } from "@/app/api/notion";
 import React, { Suspense } from "react";
 import ArticleEmoji from "../[article_id]/_components/ArticleEmoji";
 import Link from "next/link";
