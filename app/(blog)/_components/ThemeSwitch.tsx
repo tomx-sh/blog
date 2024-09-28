@@ -2,11 +2,16 @@
 import { useTheme } from "next-themes"
 import { Tooltip, IconButton } from "@radix-ui/themes"
 import { Sun, Moon } from "lucide-react"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 
 
 export default function ThemeSwitch() {
     const { theme, systemTheme, resolvedTheme, setTheme } = useTheme()
+    const [isMounted, setIsMounted] = useState(false)
+
+    useEffect(() => {
+        setIsMounted(true)
+    }, [])
 
     /*useEffect(() => {
         console.log(`Theme set to ${theme}${theme == 'system' ? ` (${resolvedTheme})` : ''}`)
@@ -26,7 +31,7 @@ export default function ThemeSwitch() {
     return (
         <Tooltip content='Toggle dark mode'>
             <IconButton variant='ghost' size='1' onClick={handleClick}>
-                { resolvedTheme == 'dark' ? <Moon size='16' /> : <Sun size='16' /> }
+                { isMounted && (resolvedTheme == 'dark') ? <Moon size='16' /> : <Sun size='16' /> }
             </IconButton>
         </Tooltip>
     )
