@@ -1,6 +1,12 @@
 import { Callout, Separator, Code, Link, Heading, Box } from '@radix-ui/themes';
-import CustomCodeBlock from './CustomCodeBlock';
-import { lora } from '@/app/fonts';
+//import CustomCodeBlock from './CustomCodeBlock';
+import dynamic from 'next/dynamic';
+const CustomCodeBlock = dynamic(() => import('./CustomCodeBlock'), { ssr: false });
+import { new_york, sf_pro, sf_mono } from '@/app/fonts';
+
+
+const textColor = 'var(--gray-12)';
+const normalFont = sf_pro
 
 
 function CustomBlockquote(props: any) {
@@ -16,11 +22,11 @@ function CustomSeparator(props: any) {
 }
 
 function CustomCode(props: any) {
-    return <Code>{props.children}</Code>
+    return <Code className={sf_mono.className}>{props.children}</Code>
 }
 
 function CustomLink(props: any) {
-    return <Link href={props.href}>{props.children}</Link>
+    return <Link href={props.href} color='blue'>{props.children}</Link>
 }
 
 function CustomPre(props: any) {
@@ -34,7 +40,7 @@ function CustomPre(props: any) {
 }
 
 function CustomParagraph(props: any) {
-    return <p className={lora.className} style={{color:'var(--gray-12)', textAlign: 'justify', margin: 'var(--space-3) 0' }}>{props.children}</p>
+    return <p className={normalFont.className} style={{color: textColor, textAlign: 'justify', margin: 'var(--space-3) 0' }}>{props.children}</p>
 }
 
 function CustomImage(props: any) {
@@ -43,23 +49,23 @@ function CustomImage(props: any) {
 }
 
 function CustomH1(props: any) {
-    return <Heading as='h1' size='8' mt='75px'>{props.children}</Heading>
+    return <Heading as='h1' size='8' mt='var(--space-9)'>{props.children}</Heading>
 }
 
 function CustomH2(props: any) {
-    return <Heading as='h2' size='7' mt='50px'>{props.children}</Heading>
+    return <Heading as='h2' size='7' mt='var(--space-8)'>{props.children}</Heading>
 }
 
 function CustomH3(props: any) {
-    return <Heading as='h3' size='4' mt='25px'>{props.children}</Heading>
+    return <Heading as='h3' size='4' mt='var(--space-7)'>{props.children}</Heading>
 }
 
 function CustomOl(props: any) {
-    return <ol className={lora.className} style={{ paddingInlineStart: '40px', margin: 'var(--space-3) 0'}}>{props.children}</ol>
+    return <ol className={normalFont.className} style={{ color: textColor, paddingInlineStart: '40px', margin: 'var(--space-3) 0'}}>{props.children}</ol>
 }
 
 function CustomUl(props: any) {
-    return <ul className={lora.className} style={{ paddingInlineStart: '40px', margin: 'var(--space-3) 0'}}>{props.children}</ul>
+    return <ul className={normalFont.className} style={{ color: textColor, paddingInlineStart: '40px', margin: 'var(--space-3) 0'}}>{props.children}</ul>
 }
 
 const customComponents = {

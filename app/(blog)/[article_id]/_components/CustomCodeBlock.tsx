@@ -2,8 +2,8 @@
 import { CodeBlock } from 'react-code-block';
 import { themes } from 'prism-react-renderer';
 import { useTheme } from 'next-themes';
-import { roboto_mono } from '@/app/fonts';
 import { ScrollArea } from '@radix-ui/themes';
+import { sf_mono } from '@/app/fonts';
 
 
 interface CustomCodeBlockProps {
@@ -20,15 +20,15 @@ export default function CustomCodeBlock({ codeString, language }: CustomCodeBloc
             <ScrollArea
                 scrollbars='horizontal'
                 style={{
-                    backgroundColor: 'var(--gray-2)',
-                    padding: 'var(--space-4)',
+                    backgroundColor: 'var(--gray-1)',
+                    padding: 'var(--space-6)',
                     borderRadius: 'var(--radius-3)',
                     boxShadow: 'var(--shadow-2)',
-                    fontSize: '0.8rem',
-                    lineHeight: '0.9rem',
+                    fontSize: '0.9rem',
+                    lineHeight: '1.2rem',
             }}>
 
-                <CodeBlock.Code className={roboto_mono.className}>
+                <CodeBlock.Code className={sf_mono.className}>
 
                     <CodeBlock.LineContent>
                         <CodeBlock.Token />

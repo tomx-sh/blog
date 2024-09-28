@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { inter } from "./fonts";
+//import { inter } from "./fonts";
+import { sf_pro } from "./fonts";
 import '@radix-ui/themes/styles.css';
 import { Theme } from '@radix-ui/themes';
 import { ThemeProvider } from 'next-themes'
@@ -15,7 +16,7 @@ export const metadata: Metadata = {
 export default function RootLayout({children}: Readonly<{children: React.ReactNode}>) {
     return (
         <html lang="en" suppressHydrationWarning>
-            <body className={inter.className}>
+            <body className={sf_pro.className}>
                 <ThemeProvider attribute="class">
                     <Theme accentColor="gray" grayColor="slate">
                         {children}

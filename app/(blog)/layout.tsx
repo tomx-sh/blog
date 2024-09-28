@@ -1,7 +1,6 @@
 import { Separator, Flex, Text, Strong, Tooltip } from "@radix-ui/themes";
 import ThemeSwitch from "./_components/ThemeSwitch";
 import Link from "./_components/Link";
-import Refresh from "./_components/Refresh";
 
 
 export default function Layout({children}: Readonly<{children: React.ReactNode}>) {
@@ -16,10 +15,7 @@ export default function Layout({children}: Readonly<{children: React.ReactNode}>
                         </Link>
                     </Tooltip>
 
-                    <Flex gap='3'>
-                        <ThemeSwitch />
-                        <Refresh />
-                    </Flex>
+                    <ThemeSwitch />
                     
                 </Flex>
             </header>

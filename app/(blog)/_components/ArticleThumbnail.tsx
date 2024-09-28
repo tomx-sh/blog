@@ -7,7 +7,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 
-interface ArticleThumbnailProps {
+interface ArticleThumbnailViewProps {
     title: string;
     coverImageUrl: string;
     tags: Tag[];
@@ -17,7 +17,7 @@ interface ArticleThumbnailProps {
 }
 
 
-function ArticleThumbnailA({ title, coverImageUrl, tags, date, emoji, href }: ArticleThumbnailProps) {
+function ArticleThumbnailView({ title, coverImageUrl, tags, date, emoji, href }: ArticleThumbnailViewProps) {
     return (
         <Card asChild>
             <Link href={href || '#'}> 
@@ -27,7 +27,14 @@ function ArticleThumbnailA({ title, coverImageUrl, tags, date, emoji, href }: Ar
                     <Flex direction='column'>
                         <Inset clip="padding-box" side="top" pb="current">
                             <Box position='relative' height='100px' width='100%'>
-                                <Image src={coverImageUrl} alt='Cover image'  fill={true} style={{ objectFit: 'cover' }} />
+                                <Image
+                                    src={coverImageUrl}
+                                    alt='Cover image' 
+                                    fill={true}
+                                    sizes={"(max-width: 768px) 100vw, (max-width: 1200px) 50vw" }
+                                    quality={80}
+                                    style={{ objectFit: 'cover' }}
+                                />
                             </Box>
                         </Inset>
 
@@ -88,7 +95,7 @@ async function ArticleThumbnailS({ article_id }: { article_id: string }) {
     const date = await getDate(article_id);
     const emoji = <ArticleEmoji article_id={article_id} />;
 
-    return <ArticleThumbnailA title={title} coverImageUrl={coverImageUrl} tags={tags} date={date} emoji={emoji} href={`/${article_id}`} />
+    return <ArticleThumbnailView title={title} coverImageUrl={coverImageUrl} tags={tags} date={date} emoji={emoji} href={`/${article_id}`} />
 }
 
 

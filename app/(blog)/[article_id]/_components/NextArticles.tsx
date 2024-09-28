@@ -28,6 +28,8 @@ async function NextArticleThumbnail({ articleId }: NextArticleThumbnailProps) {
                             src={coverImageUrl}
                             alt='Cover image'
                             fill={true}
+                            sizes={"400px"}
+                            quality={70}
                             style={{ objectFit: 'cover' }}
                         />
                     </Box>

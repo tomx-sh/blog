@@ -20,7 +20,14 @@ async function PageCoverS({ ...props }: PageCoverProps) {
             boxShadow: 'var(--shadow-3)',
         }}>
             { coverImageUrl && 
-                <Image src={coverImageUrl} alt='Cover image' fill={true} style={{ objectFit: 'cover' }} />
+                <Image
+                    src={coverImageUrl}
+                    alt='Cover image'
+                    fill={true}
+                    sizes="688px" // The size of the radix container
+                    quality={80}
+                    style={{ objectFit: 'cover' }}
+                />
             }
         </Box>
     )
