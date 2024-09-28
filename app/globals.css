@@ -4,6 +4,10 @@
     box-sizing: border-box;
 }
 
-.radix--themes {
-    --font-weight-bold: 900;
+.radix-themes {
+    --default-font-family: var(--sf-pro) !important;
+    --font-weight-light: 100 !important;
+    --font-weight-regular: 400 !important;
+    --font-weight-medium: 600 !important;
+    --font-weight-bold: 800 !important;
 }

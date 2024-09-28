@@ -28,7 +28,7 @@ export default async function Page({ params }: { params: {article_id: string}}) 
 
             <Section py='4'>
 
-                <Flex gap='2' align='baseline'>
+                <Flex direction='column' align='center' gap='4'>
                     <ArticleEmoji article_id={params.article_id} size='8' />
                     <ArticleTitle article_id={params.article_id} />
                 </Flex>
@@ -70,8 +70,8 @@ export default async function Page({ params }: { params: {article_id: string}}) 
 
                 <NextArticles currentArticleId={params.article_id} />
 
-
                 <Heading as='h3' size='3' color='gray' weight='regular' mt='5'>About the author</Heading>
+
                 <Card mt='1' size='2' asChild>
                     <Link href='https://tomx.sh' prefetch>
                         <Flex gap='3' align='center'>
@@ -86,9 +86,6 @@ export default async function Page({ params }: { params: {article_id: string}}) 
                         </Flex>
                     </Link>
                 </Card>
-
-                
-
 
             </Section>
 

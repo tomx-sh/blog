@@ -1,6 +1,7 @@
 import { getTags } from "@/app/api/notion";
-import { Badge, Flex, Skeleton } from "@radix-ui/themes";
+import {  Flex, Skeleton } from "@radix-ui/themes";
 import { Suspense } from "react";
+import BadgeMono from "@/app/(blog)/_components/BadgeMono";
 
 
 async function ArticleBadgesS({ article_id }: { article_id: string }) {
@@ -10,7 +11,7 @@ async function ArticleBadgesS({ article_id }: { article_id: string }) {
         <Flex gap='2' align='center' wrap='wrap'>
             {tags.map(tag => (
                 // color={tag.color as any}
-                <Badge key={tag.id} variant='surface' radius='full' color={tag.color as any}>{tag.name}</Badge>
+                <BadgeMono key={tag.id} variant='surface' radius='full' color={tag.color as any}>{tag.name}</BadgeMono>
             ))}
         </Flex>
     )
@@ -21,15 +22,15 @@ function ArticleBadgesSkeleton() {
     return (
         <Flex gap='2' align='center' wrap='wrap'>
             <Skeleton>
-                <Badge variant='outline' radius='full'>Tag</Badge>
+                <BadgeMono variant='outline' radius='full'>Tag</BadgeMono>
             </Skeleton>
 
             <Skeleton>
-                <Badge variant='outline' radius='full'>Tag</Badge>
+                <BadgeMono variant='outline' radius='full'>Tag</BadgeMono>
             </Skeleton>
 
             <Skeleton>
-                <Badge variant='outline' radius='full'>Tag</Badge>
+                <BadgeMono variant='outline' radius='full'>Tag</BadgeMono>
             </Skeleton>
         </Flex>
     )

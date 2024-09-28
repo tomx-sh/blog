@@ -79,7 +79,7 @@ export const getPageTitle = cache(async (pageId: string) => {
     )
 
     const responseAny = response as any; // Unfortunatelly Notion's API doesn't provide a handy type for this response
-    const title = responseAny.results[0].title.text.content;
+    const title = responseAny.results[0].title.text.content as string;
 
     return title;
 })

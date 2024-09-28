@@ -1,9 +1,11 @@
 import { Tag } from "@/app/api/notion";
-import { Card, Inset, Text, Badge, Flex, Skeleton, Heading, Box, Grid, Link as RadixLink, Separator } from "@radix-ui/themes";
+import { Card, Inset, Text, Flex, Skeleton, Heading, Box, Grid, Link as RadixLink, Separator } from "@radix-ui/themes";
+import BadgeMono from "@/app/(blog)/_components/BadgeMono";
 import { getDate, getTags, getPageCoverImageUrl, getPageTitle } from "@/app/api/notion";
 import React, { Suspense } from "react";
 import ArticleEmoji from "../[article_id]/_components/ArticleEmoji";
 import Link from "next/link";
+import { sf_mono } from "@/app/fonts";
 
 
 interface ArticleRowViewProps {
@@ -31,11 +33,11 @@ function ArticleRowView({ title, tags, date, href }: ArticleRowViewProps) {
             <Flex gap='3' align='center'>
                 <Flex gap='2' wrap='nowrap' display={{initial:'none', sm:'flex'}}>
                     {tags.map(tag => (
-                        <Badge key={tag.id} variant='surface' radius='full' color={tag.color as any}>{tag.name}</Badge>
+                        <BadgeMono key={tag.id} variant='surface' radius='full' color={tag.color as any}>{tag.name}</BadgeMono>
                     ))}
                 </Flex>
 
-                <Text as='p' size='1' color='gray' wrap='nowrap'>{date.getFullYear()}</Text>
+                <Text as='p' size='1' color='gray' wrap='nowrap' className={sf_mono.className}>{date.getFullYear()}</Text>
                 
             </Flex>
 
@@ -58,9 +60,9 @@ function ArticleRowSkeleton() {
 
             <Flex gap='3' align='center'>
                 <Flex gap='2' wrap='nowrap' display={{initial:'none', sm:'flex'}}>
-                    <Skeleton><Badge variant='surface' radius='full' color='gray'>Mock badge</Badge></Skeleton>
-                    <Skeleton><Badge variant='surface' radius='full' color='gray'>Mock badge</Badge></Skeleton>
-                    <Skeleton><Badge variant='surface' radius='full' color='gray'>Mock badge</Badge></Skeleton>
+                    <Skeleton><BadgeMono variant='surface' radius='full' color='gray'>Mock badge</BadgeMono></Skeleton>
+                    <Skeleton><BadgeMono variant='surface' radius='full' color='gray'>Mock badge</BadgeMono></Skeleton>
+                    <Skeleton><BadgeMono variant='surface' radius='full' color='gray'>Mock badge</BadgeMono></Skeleton>
                 </Flex>
 
                 <Text as='p' size='1' color='gray' wrap='nowrap'><Skeleton>2024</Skeleton></Text>

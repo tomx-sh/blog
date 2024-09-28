@@ -1,8 +1,7 @@
 import { Callout, Separator, Code, Link, Heading, Box } from '@radix-ui/themes';
-//import CustomCodeBlock from './CustomCodeBlock';
 import dynamic from 'next/dynamic';
 const CustomCodeBlock = dynamic(() => import('./CustomCodeBlock'), { ssr: false });
-import { new_york, sf_pro, sf_mono } from '@/app/fonts';
+import { new_york_small, sf_pro, sf_mono } from '@/app/fonts';
 
 
 const textColor = 'var(--gray-12)';
@@ -11,7 +10,7 @@ const normalFont = sf_pro
 
 function CustomBlockquote(props: any) {
     return (
-        <Callout.Root my='5'>
+        <Callout.Root my='5' className={new_york_small.className} style={{fontStyle: 'italic', filter: 'grayscale(1)'}}>
             {props.children[1].props.children}
         </Callout.Root>
     )
@@ -26,7 +25,7 @@ function CustomCode(props: any) {
 }
 
 function CustomLink(props: any) {
-    return <Link href={props.href} color='blue'>{props.children}</Link>
+    return <Link href={props.href} color='gray'>{props.children}</Link>
 }
 
 function CustomPre(props: any) {

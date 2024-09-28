@@ -1,10 +1,12 @@
 import { Tag } from "@/app/api/notion";
-import { Card, Inset, Text, Badge, Flex, Skeleton, Heading, Box } from "@radix-ui/themes";
+import { Card, Inset, Text, Flex, Skeleton, Heading, Box, Badge } from "@radix-ui/themes";
 import { getDate, getTags, getPageCoverImageUrl, getPageTitle } from "@/app/api/notion";
 import React, { Suspense } from "react";
 import ArticleEmoji from "../[article_id]/_components/ArticleEmoji";
 import Link from "next/link";
 import Image from "next/image";
+import BadgeMono from "./BadgeMono";
+import { sf_mono, new_york_small } from "@/app/fonts";
 
 
 interface ArticleThumbnailViewProps {
@@ -16,12 +18,14 @@ interface ArticleThumbnailViewProps {
     href?: string;
 }
 
+const gap = '2';
+
 
 function ArticleThumbnailView({ title, coverImageUrl, tags, date, emoji, href }: ArticleThumbnailViewProps) {
     return (
         <Card asChild>
             <Link href={href || '#'}> 
-                <Flex direction='column' height='100%' justify='between' gap='2'>
+                <Flex direction='column' height='100%' justify='between' gap={gap}>
 
 
                     <Flex direction='column'>
@@ -33,27 +37,28 @@ function ArticleThumbnailView({ title, coverImageUrl, tags, date, emoji, href }:
                                     fill={true}
                                     sizes={"(max-width: 768px) 100vw, (max-width: 1200px) 50vw" }
                                     quality={80}
-                                    style={{ objectFit: 'cover' }}
+                                    style={{ objectFit: 'cover'}}
                                 />
                             </Box>
                         </Inset>
 
-                        <Flex gap='2' align='baseline' >
+                        <Flex gap={gap} align='baseline' >
                             {emoji}
-                            <Heading as='h2' size='3'>{title}</Heading>
+                            <Heading as='h2' size='5'>{title}</Heading>
                         </Flex>
+
                     </Flex>
 
 
 
-                    <Flex gap='2' align='end' wrap='wrap' justify='between'>
-                        <Flex gap='2' align='center' wrap='wrap'>
+                    <Flex gap={gap} align='end' wrap='wrap' justify='between'>
+                        <Flex gap={gap} align='center' wrap='wrap'>
                             {tags.map(tag => (
-                                <Badge key={tag.id} variant='surface' radius='full' color={tag.color as any}>{tag.name}</Badge>
+                                <BadgeMono key={tag.id} variant='surface' radius='full' color={tag.color as any}>{tag.name}</BadgeMono>
                             ))}
                         </Flex>
 
-                        <Text as='p' size='1' color='gray'>{date.toDateString()}</Text>
+                        <Text as='p' size='1' color='gray' className={sf_mono.className}>{date.toDateString()}</Text>
                     </Flex>
 
                     
@@ -65,24 +70,32 @@ function ArticleThumbnailView({ title, coverImageUrl, tags, date, emoji, href }:
 
 function ArticleThumbnailSkeleton() {
     return (
-        <Card>
-            <Inset clip="padding-box" side="top" pb="current">
-                <Skeleton width={'100%'} height='100px'/>
-            </Inset>
+        <Card asChild>
+            <Flex direction='column' height='100%' justify='between' gap={gap}>
 
-            <Flex gap='2' align='baseline' >
-                <Skeleton width='25px' height='28px'/>
-                <Skeleton><Heading as='h2' size='3' mb='3'>The big title of the article</Heading></Skeleton>
-            </Flex>
+                <Flex direction='column'>
+                    <Inset clip="padding-box" side="top" pb="current">
+                        <Skeleton height='100px' width='100%' />
+                    </Inset>
 
-            <Flex gap='2' align='end' wrap='wrap' justify='between'>
-                <Flex gap='2' align='center' wrap='wrap'>
-                    <Skeleton><Badge radius='full'>Tag 1</Badge></Skeleton>
-                    <Skeleton><Badge radius='full'>Tag 2</Badge></Skeleton>
-                    <Skeleton><Badge radius='full'>Tag 3</Badge></Skeleton>
+                    <Flex gap={gap} align='baseline' >
+                        <Skeleton><Heading as='h2' size='5'>Mock title</Heading></Skeleton>
+                    </Flex>
+
                 </Flex>
 
-                <Skeleton><Text as='p'>{new Date().toDateString()}</Text></Skeleton>
+                <Flex gap={gap} align='end' wrap='wrap' justify='between'>
+
+                    <Flex gap={gap} align='center' wrap='wrap'>
+                        <Skeleton><Badge variant='surface' radius='full'>Tag 11</Badge></Skeleton>
+                        <Skeleton><Badge variant='surface' radius='full'>Tag 1</Badge></Skeleton>
+                        <Skeleton><Badge variant='surface' radius='full'>Tag 111</Badge></Skeleton>
+                    </Flex>
+
+                    <Text as='p' size='1' color='gray' className={sf_mono.className}>{new Date().toDateString()}</Text>
+
+                </Flex>
+
             </Flex>
         </Card>
     )

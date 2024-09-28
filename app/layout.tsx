@@ -1,10 +1,9 @@
-import type { Metadata } from "next";
-//import { inter } from "./fonts";
 import { sf_pro } from "./fonts";
-import '@radix-ui/themes/styles.css';
 import { Theme } from '@radix-ui/themes';
-import { ThemeProvider } from 'next-themes'
+import '@radix-ui/themes/styles.css';
 import './globals.css';
+import { ThemeProvider } from 'next-themes'
+import type { Metadata } from "next";
 
 
 export const metadata: Metadata = {

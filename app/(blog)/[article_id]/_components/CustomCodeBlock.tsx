@@ -28,7 +28,7 @@ export default function CustomCodeBlock({ codeString, language }: CustomCodeBloc
                     lineHeight: '1.2rem',
             }}>
 
-                <CodeBlock.Code className={sf_mono.className}>
+                <CodeBlock.Code className={sf_mono.className} style={{ filter: 'grayscale(1)' }}>
 
                     <CodeBlock.LineContent>
                         <CodeBlock.Token />

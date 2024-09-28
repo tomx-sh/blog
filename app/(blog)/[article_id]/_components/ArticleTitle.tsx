@@ -1,14 +1,16 @@
 import { getPageTitle } from "@/app/api/notion";
 import { Heading, Skeleton } from "@radix-ui/themes";
 import { Suspense } from "react";
-import { new_york } from "@/app/fonts";
+import { new_york_large } from "@/app/fonts";
 
 
 async function ArticleTitleS({ article_id }: { article_id: string }) {
     const title = await getPageTitle(article_id);
 
     return (
-        <Heading as='h1' size='8' weight='bold' className={new_york.className}>{title}</Heading>
+        <Heading as='h1' size='8' className={new_york_large.className} align='center'>
+            {title.toUpperCase()}
+        </Heading>
     )
 }
 
