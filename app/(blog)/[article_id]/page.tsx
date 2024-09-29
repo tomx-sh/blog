@@ -1,11 +1,11 @@
 import { Separator, Container, Section, Flex, Heading, Button, Grid, Card, Avatar, Text } from '@radix-ui/themes';
 import Link from 'next/link';
-import ArticleDate from './_components/ArticleDate';
+import ArticleDate from '../../_components/PageDate';
 import ArticleTitle from './_components/ArticleTitle';
-import ArticleBadges from './_components/ArticleBadges';
-import ArticleContent from './_components/ArticleContent';
+import ArticleBadges from '../../_components/PageBadges';
+import ArticleContent from '../../_components/PageContent';
 import { ChevronLeft, ChevronUp, ChevronsLeft } from 'lucide-react';
-import PageCover from './_components/PageCover';
+import PageCover from '../../_components/PageCover';
 import PageEmoji from '../../_components/PageEmoji';
 import HomeButton from '../_components/HomeButton';
 import NextArticles from './_components/NextArticles';
@@ -36,13 +36,13 @@ export default async function Page({ params }: { params: {article_id: string}}) 
                 <Separator size='4' my='4'/>
 
                 <Flex justify='between'>
-                    <ArticleBadges article_id={params.article_id} />
-                    <ArticleDate article_id={params.article_id} />
+                    <ArticleBadges page_id={params.article_id} />
+                    <ArticleDate page_id={params.article_id} />
                 </Flex>
             </Section>
 
             <Section>
-                <ArticleContent article_id={params.article_id} />
+                <ArticleContent page_id={params.article_id} />
             </Section>
 
             <Section>

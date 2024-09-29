@@ -2,10 +2,17 @@ import { getTags } from "@/app/api/notion";
 import {  Flex, Skeleton } from "@radix-ui/themes";
 import { Suspense } from "react";
 import BadgeMono from "@/app/_components/BadgeMono";
+import { TagProperty } from "@/app/api/notion";
+
+interface PageBadgesProps {
+    page_id: string
+    tagsProperty?: TagProperty
+}
 
 
-async function ArticleBadgesS({ article_id }: { article_id: string }) {
-    const tags = await getTags({ pageId: article_id, property: 'Tags' });
+
+async function PageBadgesS({ page_id, tagsProperty='Tags'}: PageBadgesProps) {
+    const tags = await getTags({ pageId: page_id, property: tagsProperty });
 
     return (
         <Flex gap='2' align='center' wrap='wrap'>
@@ -18,7 +25,7 @@ async function ArticleBadgesS({ article_id }: { article_id: string }) {
 }
 
 
-function ArticleBadgesSkeleton() {
+function PageBadgesSkeleton() {
     return (
         <Flex gap='2' align='center' wrap='wrap'>
             <Skeleton>
@@ -37,10 +44,10 @@ function ArticleBadgesSkeleton() {
 }
 
 
-export default function ArticleBadges({ article_id }: { article_id: string }) {
+export default function PageBadges({ page_id, tagsProperty }: PageBadgesProps) {
     return (
-        <Suspense fallback={<ArticleBadgesSkeleton />}>
-            <ArticleBadgesS article_id={article_id} />
+        <Suspense fallback={<PageBadgesSkeleton />}>
+            <PageBadgesS page_id={page_id} tagsProperty={tagsProperty} />
         </Suspense>
     )
 }

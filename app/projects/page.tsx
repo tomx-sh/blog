@@ -1,6 +1,6 @@
 import { getPublishedPagesIds } from '../api/notion';
 import { Container, Section, Grid, Heading } from '@radix-ui/themes';
-import PageCover from '../(blog)/[article_id]/_components/PageCover';
+import PageCover from '../_components/PageCover';
 import ProjectThumbnail from './_components/ProjectThumbnail';
 
 

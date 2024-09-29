@@ -169,7 +169,7 @@ export interface Tag {
     color: string
 }
 
-type TagProperty = 'Tags' | 'Features' | 'Stack'
+export type TagProperty = 'Tags' | 'Features' | 'Stack'
 
 
 export const getTags = cache(async ({ pageId, property }: { pageId: string, property: TagProperty }) => {

@@ -48,15 +48,15 @@ function CustomImage(props: any) {
 }
 
 function CustomH1(props: any) {
-    return <Heading as='h1' size='8' mt='var(--space-9)'>{props.children}</Heading>
+    return <Heading as='h1' size='7' mt='var(--space-9)'>{props.children}</Heading>
 }
 
 function CustomH2(props: any) {
-    return <Heading as='h2' size='7' mt='var(--space-8)'>{props.children}</Heading>
+    return <Heading as='h2' size='6' mt='var(--space-8)'>{props.children}</Heading>
 }
 
 function CustomH3(props: any) {
-    return <Heading as='h3' size='4' mt='var(--space-7)'>{props.children}</Heading>
+    return <Heading as='h3' size='5' mt='var(--space-7)'>{props.children}</Heading>
 }
 
 function CustomOl(props: any) {

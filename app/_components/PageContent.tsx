@@ -5,8 +5,8 @@ import { Skeleton, Text } from '@radix-ui/themes';
 import { Suspense } from 'react';
 
 
-async function ArticleContentS({ article_id }: { article_id: string }) {
-    const mdString = await getMarkdown(article_id);
+async function PageContentS({ page_id }: { page_id: string }) {
+    const mdString = await getMarkdown(page_id);
 
     return (
         <MDXRemote source={mdString} components={customComponents} />
@@ -14,7 +14,7 @@ async function ArticleContentS({ article_id }: { article_id: string }) {
 }
 
 
-function ArticleContentSkeleton() {
+function PageContentSkeleton() {
     return (
         <Text>
             <Skeleton>
@@ -33,10 +33,10 @@ function ArticleContentSkeleton() {
 }
 
 
-export default function ArticleContent({ article_id }: { article_id: string }) {
+export default function PageContent({ page_id }: { page_id: string }) {
     return (
-        <Suspense fallback={<ArticleContentSkeleton />}>
-            <ArticleContentS article_id={article_id} />
+        <Suspense fallback={<PageContentSkeleton />}>
+            <PageContentS page_id={page_id} />
         </Suspense>
     )
 }

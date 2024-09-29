@@ -3,19 +3,25 @@ import { Text, Skeleton } from "@radix-ui/themes";
 import { Suspense } from "react";
 import { sf_mono } from "@/app/fonts";
 
-async function ArticleDateS({ article_id }: { article_id: string }) {
-    const date = await getDate(article_id);
+
+interface PageDateProps {
+    page_id: string
+    format?: Intl.DateTimeFormatOptions
+}
+
+async function PageDateS({ page_id, format = { year: 'numeric', month: 'long', day: 'numeric' }}: PageDateProps) {
+    const date = await getDate(page_id);
 
     return (
         <Text asChild size='2' color='gray' className={sf_mono.className}>
             <time>
-                {date.toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}
+                {date.toLocaleDateString(undefined, format)}
             </time>
         </Text>
     )
 }
 
-function ArticleDateSkeleton() {
+function PageDateSkeleton() {
     return (
         <Skeleton>
             <Text asChild size='3' color='gray'>
@@ -26,10 +32,10 @@ function ArticleDateSkeleton() {
 }
 
 
-export default function ArticleDate({ article_id }: { article_id: string }) {
+export default function PageDate({ page_id, format }: PageDateProps) {
     return (
-        <Suspense fallback={<ArticleDateSkeleton />}>
-            <ArticleDateS article_id={article_id} />
+        <Suspense fallback={<PageDateSkeleton />}>
+            <PageDateS page_id={page_id} format={format} />
         </Suspense>
     )
 }

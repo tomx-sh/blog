@@ -1,7 +1,7 @@
 import { getPublishedPagesIds, getFeaturedArticlesPagesIds } from '../api/notion';
 import { Container, Section, Grid, Heading, Flex } from '@radix-ui/themes';
 import ArticleThumbnail from './_components/ArticleThumbnail';
-import PageCover from './[article_id]/_components/PageCover';
+import PageCover from '../_components/PageCover';
 import ArticleRow from './_components/ArticleRow';
 
 
