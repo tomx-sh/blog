@@ -2,6 +2,8 @@ import { getPageTitle } from "@/app/api/notion";
 import { Heading, Skeleton } from "@radix-ui/themes";
 import { Suspense } from "react";
 import { new_york_large } from "@/app/fonts";
+import '@radix-ui/themes/styles.css';
+import './globals.css';
 
 
 async function ArticleTitleS({ article_id }: { article_id: string }) {
