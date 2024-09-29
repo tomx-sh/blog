@@ -1,4 +1,4 @@
-import { getFeaturedArticlesPagesIds, getPageTitle, getPageCoverImageUrl, getDate, getTags, Tag } from "../notion";
+import { getFeaturedArticlesPagesIds, getPageTitle, getPageCoverImageUrl, getDate, getTags, Tag } from "../../notion";
 
 
 interface ArticleData {

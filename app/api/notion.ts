@@ -71,6 +71,29 @@ export const getFeaturedArticlesPagesIds = cache(async () => {
     return pageIds;
 })
 
+export const getFeaturedProjectsPagesIds = cache(async () => {
+    const notionClient = new Client({ auth: process.env.NOTION_API_KEY });
+
+    const response = await notionClient.databases.query({
+        database_id: getDatabaseId('projects'),
+        filter: {
+            and: [
+                { property: 'Publier', checkbox: { equals: true } },
+                { property: 'Featured', checkbox: { equals: true } }
+            ]
+        }
+    });
+
+    const pageIds: string[] = [];
+    for (const page of response.results) {
+        if (isFullPage(page)) {
+            pageIds.push(page.id);
+        }
+    }
+
+    return pageIds;
+})
+
 
 export const getNotionPage = cache(async (pageId: string) => {
     const notionClient = new Client({ auth: process.env.NOTION_API_KEY });
