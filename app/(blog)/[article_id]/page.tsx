@@ -11,7 +11,7 @@ import HomeButton from '../_components/HomeButton';
 import NextArticles from './_components/NextArticles';
 import { getPublishedPagesIds } from '@/app/api/notion';
 import '@radix-ui/themes/styles.css';
-import './globals.css';
+import '@/app/globals.css';
 
 
 
