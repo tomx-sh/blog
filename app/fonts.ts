@@ -3,7 +3,7 @@ import localFont from 'next/font/local'
 
 export const sf_mono = localFont({
     src: '../public/fonts/SF-Mono-Medium.otf',
-    display: 'swap',
+    display: 'block',
     weight: '400',
     variable: '--sf-mono',
 })
@@ -11,7 +11,7 @@ export const sf_mono = localFont({
 
 export const new_york_small = localFont({
     variable: '--new-york-small',
-    display: 'swap',
+    display: 'block',
     src: [
         {
             path: '../public/fonts/New-York/Small/NewYorkSmall-Regular.otf',
@@ -33,7 +33,7 @@ export const new_york_small = localFont({
 
 export const new_york_large = localFont({
     variable: '--new-york-large',
-    display: 'swap',
+    display: 'block',
     src: [
         {
             path: '../public/fonts/New-York/Large/NewYorkLarge-Heavy.otf',
@@ -138,5 +138,5 @@ export const sf_pro = localFont({
             style: 'italic',
         },
     ],
-    display: 'swap',
+    display: 'block',
 })
