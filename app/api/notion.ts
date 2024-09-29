@@ -1,5 +1,4 @@
 import { Client, isFullPage } from '@notionhq/client';
-import { GetPagePropertyResponse } from '@notionhq/client/build/src/api-endpoints';
 import { NotionToMarkdown } from 'notion-to-md';
 import { cache } from 'react';
 import { revalidatePath } from 'next/cache';

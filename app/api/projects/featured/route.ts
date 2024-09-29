@@ -16,7 +16,7 @@ interface ProjectData {
 }
 
 interface ResponseBody {
-    articles: ProjectData[]
+    projects: ProjectData[]
 }
 
 
@@ -24,10 +24,10 @@ export async function GET(req: Request) {
     const host = req.headers.get('host') || 'localhost:3000';
     const protocol = req.headers.get('x-forwarded-proto') || (host.includes('localhost') ? 'http' : 'https');
 
-    const featuredArticleIds = await getFeaturedProjectsPagesIds();
+    const featuredProjectsIds = await getFeaturedProjectsPagesIds();
 
-    const articles = await Promise.all(
-        featuredArticleIds.map(async (pageId) => {
+    const projects = await Promise.all(
+        featuredProjectsIds.map(async (pageId) => {
             return {
                 url: `${protocol}://${host}/${pageId}`,
                 title: await getPageTitle(pageId),
@@ -44,5 +44,5 @@ export async function GET(req: Request) {
         })
     )
 
-    return Response.json({ articles } as ResponseBody);
+    return Response.json({ projects } as ResponseBody);
 }
