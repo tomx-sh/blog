@@ -1,11 +1,11 @@
 import { getTags } from "@/app/api/notion";
 import {  Flex, Skeleton } from "@radix-ui/themes";
 import { Suspense } from "react";
-import BadgeMono from "@/app/(blog)/_components/BadgeMono";
+import BadgeMono from "@/app/_components/BadgeMono";
 
 
 async function ArticleBadgesS({ article_id }: { article_id: string }) {
-    const tags = await getTags(article_id);
+    const tags = await getTags({ pageId: article_id, property: 'Tags' });
 
     return (
         <Flex gap='2' align='center' wrap='wrap'>

@@ -10,4 +10,6 @@
     --font-weight-regular: 400 !important;
     --font-weight-medium: 600 !important;
     --font-weight-bold: 800 !important;
+
+    --cursor-button: pointer !important;
 }

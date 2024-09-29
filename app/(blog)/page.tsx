@@ -1,4 +1,4 @@
-import { getArticlesPagesIds, getFeaturedArticlesPagesIds } from '../api/notion';
+import { getPublishedPagesIds, getFeaturedArticlesPagesIds } from '../api/notion';
 import { Container, Section, Grid, Heading, Flex } from '@radix-ui/themes';
 import ArticleThumbnail from './_components/ArticleThumbnail';
 import PageCover from './[article_id]/_components/PageCover';
@@ -7,12 +7,12 @@ import ArticleRow from './_components/ArticleRow';
 
 export default async function Home() {
     const featuredArticleIds = await getFeaturedArticlesPagesIds();
-    const articleIds = await getArticlesPagesIds();
+    const articleIds = await getPublishedPagesIds('articles');
 
     return (
         <Container size='3' mx='5'>
 
-            <PageCover type='database' width='100%' height='200px'/>
+            <PageCover type='database' database='articles' width='100%' height='200px'/>
 
             <Section>
                 <Heading as='h1' size='8' mb='5' style={{fontWeight:'900'}}>Featured</Heading>

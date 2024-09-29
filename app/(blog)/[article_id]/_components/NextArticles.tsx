@@ -1,5 +1,5 @@
 import { Grid, Card, Inset, AspectRatio, Heading, Box, Flex } from "@radix-ui/themes";
-import { getArticlesPagesIds, getPageCoverImageUrl, getPageTitle } from "@/app/api/notion";
+import { getPublishedPagesIds, getPageCoverImageUrl, getPageTitle } from "@/app/api/notion";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -45,7 +45,7 @@ async function NextArticleThumbnail({ articleId }: NextArticleThumbnailProps) {
 
 
 export default async function NextArticles({ currentArticleId }: NextArticlesProps) {
-    let articleIds = await getArticlesPagesIds();
+    let articleIds = await getPublishedPagesIds('articles');
     articleIds = articleIds.filter((id) => id !== currentArticleId);
     const recentArticles = articleIds.slice(0, 3);
 

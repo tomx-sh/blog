@@ -2,15 +2,16 @@ import { getPageCoverImageUrl, getDatabaseCoverImageUrl } from "@/app/api/notion
 import { Skeleton, BoxProps, Box } from "@radix-ui/themes";
 import { Suspense } from "react";
 import Image from "next/image";
+import type { Db } from "@/app/api/notion";
 
 
-type PageCoverProps = ({ type: 'database' } | { type: 'page', id: string }) & BoxProps;
+type PageCoverProps = ({ type: 'database', database: Db } | { type: 'page', id: string }) & BoxProps;
 
 
 async function PageCoverS({ ...props }: PageCoverProps) {
     const coverImageUrl = (
             props.type === 'database' ?
-                await getDatabaseCoverImageUrl() :
+                await getDatabaseCoverImageUrl(props.database) :
                 await getPageCoverImageUrl(props.id)
     ) || 'https://pbs.twimg.com/profile_banners/200216115/1713358979/1500x500';
 

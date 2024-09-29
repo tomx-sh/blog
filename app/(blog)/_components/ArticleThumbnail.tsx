@@ -2,10 +2,10 @@ import { Tag } from "@/app/api/notion";
 import { Card, Inset, Text, Flex, Skeleton, Heading, Box, Badge } from "@radix-ui/themes";
 import { getDate, getTags, getPageCoverImageUrl, getPageTitle } from "@/app/api/notion";
 import React, { Suspense } from "react";
-import ArticleEmoji from "../[article_id]/_components/ArticleEmoji";
+import PageEmoji from "../../_components/PageEmoji";
 import Link from "next/link";
 import Image from "next/image";
-import BadgeMono from "./BadgeMono";
+import BadgeMono from "../../_components/BadgeMono";
 import { sf_mono, new_york_small } from "@/app/fonts";
 
 
@@ -104,9 +104,9 @@ function ArticleThumbnailSkeleton() {
 async function ArticleThumbnailS({ article_id }: { article_id: string }) {
     const title = await getPageTitle(article_id);
     const coverImageUrl = await getPageCoverImageUrl(article_id) || 'https://pbs.twimg.com/profile_banners/200216115/1713358979/1500x500';
-    const tags = await getTags(article_id);
+    const tags = await getTags({ pageId: article_id, property: 'Tags' });
     const date = await getDate(article_id);
-    const emoji = <ArticleEmoji article_id={article_id} />;
+    const emoji = <PageEmoji page_id={article_id} />;
 
     return <ArticleThumbnailView title={title} coverImageUrl={coverImageUrl} tags={tags} date={date} emoji={emoji} href={`/${article_id}`} />
 }

@@ -6,15 +6,15 @@ import ArticleBadges from './_components/ArticleBadges';
 import ArticleContent from './_components/ArticleContent';
 import { ChevronLeft, ChevronUp, ChevronsLeft } from 'lucide-react';
 import PageCover from './_components/PageCover';
-import ArticleEmoji from './_components/ArticleEmoji';
+import PageEmoji from '../../_components/PageEmoji';
 import HomeButton from '../_components/HomeButton';
 import NextArticles from './_components/NextArticles';
-import { getArticlesPagesIds } from '@/app/api/notion';
+import { getPublishedPagesIds } from '@/app/api/notion';
 
 
 
 export async function generateStaticParams() {
-    const articleIds = await getArticlesPagesIds();
+    const articleIds = await getPublishedPagesIds('articles');
     return articleIds.map(article_id => ({ params: { article_id } }));
 }
 
@@ -29,7 +29,7 @@ export default async function Page({ params }: { params: {article_id: string}}) 
             <Section py='4'>
 
                 <Flex direction='column' align='center' gap='4'>
-                    <ArticleEmoji article_id={params.article_id} size='8' />
+                    <PageEmoji page_id={params.article_id} size='8' />
                     <ArticleTitle article_id={params.article_id} />
                 </Flex>
 

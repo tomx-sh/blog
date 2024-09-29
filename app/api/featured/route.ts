@@ -26,7 +26,7 @@ export async function GET(req: Request) {
             const title = await getPageTitle(pageId);
             const coverImageUrl = await getPageCoverImageUrl(pageId);
             const date = await getDate(pageId);
-            const tags = await getTags(pageId);
+            const tags = await getTags({ pageId, property: 'Tags' });
 
             return {
                 url:`${protocol}://${host}/${pageId}`,
