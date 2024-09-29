@@ -49,6 +49,8 @@ export default function CustomCodeBlock({ codeString, language }: CustomCodeBloc
     const { resolvedTheme } = useTheme();
     //const codeTheme = resolvedTheme === 'dark' ? themes.nightOwl : themes.nightOwlLight;
     const codeTheme = resolvedTheme === 'dark' ? themes.dracula : themes.github;
+    const shouldShowLanguage = (language !== '') && (language !== 'text');
+
 
     return (
         <Box position='relative'
@@ -61,8 +63,10 @@ export default function CustomCodeBlock({ codeString, language }: CustomCodeBloc
         
         >
 
-            <Flex justify='between' width='100%' p='2'>
-                <Badge>{language}</Badge>
+            <Flex justify={shouldShowLanguage ? 'between' : 'end'} width='100%' p='2'>
+                <Box display={shouldShowLanguage ? 'block' : 'none'}>
+                    <Badge>{language}</Badge>
+                </Box>
                 <CopyClipboardButton text={codeString} />
             </Flex>
 
