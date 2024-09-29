@@ -1,4 +1,4 @@
-import { getFeaturedArticlesPagesIds, getPageTitle, getPageCoverImageUrl, getDate, getTags, Tag } from "../../notion";
+import { getFeaturedArticlesPagesIds, getPageTitle, getPageCoverImageUrl, getDate, getTags, Tag, getPageEmoji } from "../../notion";
 
 
 interface ArticleData {
@@ -6,6 +6,7 @@ interface ArticleData {
     url: string,
     title: string,
     coverImageUrl: string,
+    emoji?: string,
     date: Date,
     tags: Tag[]
 }
@@ -27,13 +28,16 @@ export async function GET(req: Request) {
             const coverImageUrl = await getPageCoverImageUrl(pageId) || 'https://pbs.twimg.com/profile_banners/200216115/1713358979/1500x500';
             const date = await getDate(pageId);
             const tags = await getTags({ pageId, property: 'Tags' });
+            const emoji = await getPageEmoji(pageId);
+
 
             return {
                 url:`${protocol}://${host}/${pageId}`,
                 title,
                 coverImageUrl,
                 date,
-                tags
+                tags,
+                emoji: emoji || undefined
             }
         })
     )
