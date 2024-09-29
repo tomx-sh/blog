@@ -6,7 +6,7 @@ interface BadgeMonoProps extends BadgeProps {}
 
 export default function BadgeMono(props: BadgeMonoProps) {
     return (
-        <Badge {...props} className={sf_mono.className} />
+        <Badge {...props} className={`${sf_mono.variable}`} />
     )
 }
 

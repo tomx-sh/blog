@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 export default function RootLayout({children}: Readonly<{children: React.ReactNode}>) {
     return (
         <html lang="en" suppressHydrationWarning>
-            <body className={sf_pro.className}>
+            <body className={`${sf_pro.className} font-sans`}>
                 <ThemeProvider attribute="class">
                     <Theme accentColor="gray" grayColor="slate">
                         {children}
