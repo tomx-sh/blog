@@ -10,7 +10,12 @@ async function ArticleTitleS({ article_id }: { article_id: string }) {
     const title = await getPageTitle(article_id);
 
     return (
-        <Heading as='h1' size='8' className={`${new_york_large.variable} font-serif`} align='center'>
+        <Heading
+            as='h1' size='8'
+            className={`${new_york_large.variable} font-serif`}
+            style={{fontFamily: 'var(--new-york-large)'}}
+            align='center'
+        >
             {title.toUpperCase()}
         </Heading>
     )
