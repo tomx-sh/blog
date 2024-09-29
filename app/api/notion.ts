@@ -57,7 +57,8 @@ export const getFeaturedArticlesPagesIds = cache(async () => {
                 { property: 'Publier', checkbox: { equals: true } },
                 { property: 'Featured', checkbox: { equals: true } }
             ]
-        }
+        },
+        sorts: [{ property: 'Date', direction: 'descending' }]
     });
 
     const pageIds: string[] = [];
@@ -80,7 +81,8 @@ export const getFeaturedProjectsPagesIds = cache(async () => {
                 { property: 'Publier', checkbox: { equals: true } },
                 { property: 'Featured', checkbox: { equals: true } }
             ]
-        }
+        },
+        sorts: [{ property: 'Date', direction: 'descending' }]
     });
 
     const pageIds: string[] = [];
