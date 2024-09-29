@@ -42,10 +42,12 @@ function ArticleThumbnailView({ title, coverImageUrl, tags, date, emoji, href }:
                             </Box>
                         </Inset>
 
-                        <Flex gap={gap} align='baseline' >
-                            {emoji}
-                            <Heading as='h2' size='5'>{title}</Heading>
-                        </Flex>
+
+                            <Heading as='h2' size='5'>
+                                <span>{emoji}</span>{' '}{title}
+                            </Heading>
+                            
+
 
                     </Flex>
 
