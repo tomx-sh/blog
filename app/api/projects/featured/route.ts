@@ -29,7 +29,7 @@ export async function GET(req: Request) {
     const projects = await Promise.all(
         featuredProjectsIds.map(async (pageId) => {
             return {
-                url: `${protocol}://${host}/${pageId}`,
+                url: `${protocol}://${host}/projects/${pageId}`,
                 title: await getPageTitle(pageId),
                 description: await getProperty({ pageId, property: 'Description' }),
                 coverImageUrl: await getPageCoverImageUrl(pageId) || 'https://pbs.twimg.com/profile_banners/200216115/1713358979/1500x500',
