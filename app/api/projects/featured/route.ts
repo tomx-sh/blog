@@ -32,7 +32,7 @@ export async function GET(req: Request) {
                 url: `${protocol}://${host}/${pageId}`,
                 title: await getPageTitle(pageId),
                 description: await getProperty({ pageId, property: 'Description' }),
-                coverImageUrl: await getPageCoverImageUrl(pageId),
+                coverImageUrl: await getPageCoverImageUrl(pageId) || 'https://pbs.twimg.com/profile_banners/200216115/1713358979/1500x500',
                 date: await getDate(pageId),
                 githubUrl: await getProperty({ pageId, property: 'GitHub' }),
                 demoUrl: await getProperty({ pageId, property: 'Demo' }),
