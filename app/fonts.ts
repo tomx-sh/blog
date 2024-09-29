@@ -11,6 +11,7 @@ export const sf_mono = localFont({
 
 export const new_york_small = localFont({
     variable: '--new-york-small',
+    display: 'swap',
     src: [
         {
             path: '../public/fonts/New-York/Small/NewYorkSmall-Regular.otf',
@@ -32,6 +33,7 @@ export const new_york_small = localFont({
 
 export const new_york_large = localFont({
     variable: '--new-york-large',
+    display: 'swap',
     src: [
         {
             path: '../public/fonts/New-York/Large/NewYorkLarge-Heavy.otf',
