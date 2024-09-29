@@ -13,7 +13,7 @@ async function PageDateS({ page_id, format = { year: 'numeric', month: 'long', d
     const date = await getDate(page_id);
 
     return (
-        <Text asChild size='2' color='gray' className={sf_mono.className}>
+        <Text asChild size='2' color='gray' className={sf_mono.className} align={'right'}>
             <time>
                 {date.toLocaleDateString(undefined, format)}
             </time>

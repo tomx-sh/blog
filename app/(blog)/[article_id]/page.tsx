@@ -1,4 +1,4 @@
-import { Separator, Container, Section, Flex, Heading, Button, Grid, Card, Avatar, Text } from '@radix-ui/themes';
+import { Separator, Container, Section, Flex, Heading, Button, Grid, Card, Avatar, Text, Box } from '@radix-ui/themes';
 import Link from 'next/link';
 import ArticleDate from '../../_components/PageDate';
 import ArticleTitle from './_components/ArticleTitle';
@@ -48,10 +48,13 @@ export default async function Page({ params }: { params: {article_id: string}}) 
             <Section>
                 <Separator size='4' my='4'/>
 
-                <Flex justify='between' align='center'>
-                    <Heading as='h3' size='5' color='gray'>{`What's next`}</Heading>
+                <Flex align='center' justify='between' gap='4'>
 
-                    <Flex gap='2' align='center'>
+                    <Box display={{initial: 'none', sm: 'block'}}>
+                        <Heading as='h3' size='5' color='gray'>{`What's next`}</Heading>
+                    </Box>
+
+                    <Flex gap='2' align='center' justify={{initial: 'between', sm: 'end'}} width={{initial: '100%', sm: 'auto'}}>
                         <Button size='2' asChild highContrast>
                             <Link href='/'>
                                 <ChevronsLeft size='20'/>

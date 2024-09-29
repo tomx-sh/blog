@@ -2,8 +2,10 @@
 import { CodeBlock } from 'react-code-block';
 import { themes } from 'prism-react-renderer';
 import { useTheme } from 'next-themes';
-import { ScrollArea } from '@radix-ui/themes';
+import { Box, IconButton, Tooltip, Badge, Flex } from '@radix-ui/themes';
 import { sf_mono } from '@/app/fonts';
+import { Copy } from 'lucide-react';
+import { useState } from 'react';
 
 
 interface CustomCodeBlockProps {
@@ -11,32 +13,73 @@ interface CustomCodeBlockProps {
     language: string
 }
 
-export default function CustomCodeBlock({ codeString, language }: CustomCodeBlockProps) {
-    const { resolvedTheme } = useTheme();
-    const codeTheme = resolvedTheme === 'dark' ? themes.nightOwl : themes.nightOwlLight;
+
+function CopyClipboardButton({ text }: { text: string }) {
+    const [copied, setCopied] = useState(false);
+    const [open, setOpen] = useState(false);
+
+    const copyToClipboard = () => {
+        setCopied(true);
+        setOpen(true);
+        navigator.clipboard.writeText(text);
+        setTimeout(() => {
+            setCopied(false);
+            setOpen(false);
+        }, 1000);
+    }
 
     return (
-        <CodeBlock code={codeString} language={language} theme={codeTheme}>
-            <ScrollArea
-                scrollbars='horizontal'
-                style={{
-                    backgroundColor: 'var(--gray-1)',
-                    padding: 'var(--space-6)',
-                    borderRadius: 'var(--radius-3)',
-                    boxShadow: 'var(--shadow-2)',
-                    fontSize: '0.9rem',
-                    lineHeight: '1.2rem',
-            }}>
+        <Tooltip content={copied ? 'Copied!' : 'Copy'} open={open} onOpenChange={setOpen} side='left'>
+            <IconButton 
+                aria-label='Copy to clipboard'
+                variant='soft'
+                onClick={copyToClipboard}
+            >
+                <Copy size={15}/>
+            </IconButton>
+        </Tooltip>
+    )
+}
 
-                <CodeBlock.Code className={sf_mono.className} style={{ filter: 'grayscale(1)' }}>
 
-                    <CodeBlock.LineContent>
-                        <CodeBlock.Token />
-                    </CodeBlock.LineContent>
 
-                </CodeBlock.Code>
 
-            </ScrollArea>
-        </CodeBlock>
+
+export default function CustomCodeBlock({ codeString, language }: CustomCodeBlockProps) {
+    const { resolvedTheme } = useTheme();
+    //const codeTheme = resolvedTheme === 'dark' ? themes.nightOwl : themes.nightOwlLight;
+    const codeTheme = resolvedTheme === 'dark' ? themes.dracula : themes.github;
+
+    return (
+        <Box position='relative'
+            style={{
+                backgroundColor: 'var(--gray-1)',
+                borderRadius: 'var(--radius-3)',
+                boxShadow: 'var(--shadow-2)',
+                fontSize: 'var(--font-size-2)',
+            }}
+        
+        >
+
+            <Flex justify='between' width='100%' p='2'>
+                <Badge>{language}</Badge>
+                <CopyClipboardButton text={codeString} />
+            </Flex>
+
+
+            <Box overflow='scroll' p='6' pt='0'  >
+
+                <CodeBlock code={codeString} language={language} theme={codeTheme}>
+                    <CodeBlock.Code className={sf_mono.className} style={{ filter: 'grayscale(1)' }}>
+                        <CodeBlock.LineContent>
+                            <CodeBlock.Token />
+                        </CodeBlock.LineContent>
+                    </CodeBlock.Code>
+                </CodeBlock>
+
+                
+
+            </Box>
+        </Box>
     )
 }
