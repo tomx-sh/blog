@@ -24,7 +24,7 @@ export async function GET(req: Request) {
     const articles = await Promise.all(
         featuredArticleIds.map(async (pageId) => {
             const title = await getPageTitle(pageId);
-            const coverImageUrl = await getPageCoverImageUrl(pageId);
+            const coverImageUrl = await getPageCoverImageUrl(pageId) || 'https://pbs.twimg.com/profile_banners/200216115/1713358979/1500x500';
             const date = await getDate(pageId);
             const tags = await getTags({ pageId, property: 'Tags' });
 
