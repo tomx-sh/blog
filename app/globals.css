@@ -6,6 +6,7 @@
 
 .radix-themes {
     --default-font-family: var(--sf-pro) !important;
+    --code-font-family: var(--sf-mono) !important;
     --font-weight-light: 100 !important;
     --font-weight-regular: 400 !important;
     --font-weight-medium: 600 !important;
