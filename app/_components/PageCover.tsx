@@ -1,4 +1,4 @@
-import { getPageCoverImageUrl, getDatabaseCoverImageUrl } from "@/app/api/notion";
+import { getPageCoverImageBlobUrl, getDatabaseCoverImageUrl } from "@/app/api/notion";
 import { Skeleton, BoxProps, Box } from "@radix-ui/themes";
 import { Suspense } from "react";
 import Image from "next/image";
@@ -12,7 +12,7 @@ async function PageCoverS({ ...props }: PageCoverProps) {
     const coverImageUrl = (
             props.type === 'database' ?
                 await getDatabaseCoverImageUrl(props.database) :
-                await getPageCoverImageUrl(props.id)
+                await getPageCoverImageBlobUrl(props.id)
     ) || 'https://pbs.twimg.com/profile_banners/200216115/1713358979/1500x500';
 
     return (
