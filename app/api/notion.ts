@@ -2,7 +2,7 @@ import { Client, isFullPage } from '@notionhq/client';
 import { NotionToMarkdown } from 'notion-to-md';
 import { cache } from 'react';
 import { revalidatePath } from 'next/cache';
-import { put } from '@vercel/blob';
+import { uploadImageToBlob } from './vercel-blob';
 
 
 export type Db = "articles" | "projects"
@@ -123,7 +123,7 @@ export const getPageTitle = cache(async (pageId: string) => {
 })
 
 
-const getPageCoverImageUrl = cache(async (pageId: string) => {
+const getPageCoverImageUrl = async (pageId: string) => {
     const page = await getNotionPage(pageId);
     
      if (!page.cover) {
@@ -135,34 +135,24 @@ const getPageCoverImageUrl = cache(async (pageId: string) => {
             return page.cover.file.url;
         }
     }
-})
+}
+
 
 export const getPageCoverImageBlobUrl = cache(async (pageId: string) => {
     const notionUrl = await getPageCoverImageUrl(pageId);
     if (!notionUrl) {
-        console.error('No cover image found in Notion for page:', pageId);
         return undefined;
     }
-
-    const imageResponse = await fetch(notionUrl);
-    if (!imageResponse.ok) {
-        console.error('Failed to fetch image from Notion:', notionUrl);
-        return undefined;
-    }
-
-    const imageBlob = await imageResponse.blob();
 
     const slug = await getProperty({ pageId, property: 'slug' });
-    const filename = `${slug}-cover`;
+    const filename = `${slug}-cover.jpeg`;
+    const blob = await uploadImageToBlob({ imageUrl: notionUrl, fileName: filename });
 
-    console.log('Uploading image to Vercel Blob:', filename);
-    const blob = await put(filename, imageBlob, { access: 'public' });
-
-    return blob.url;
+    return blob?.url;
 })
 
 
-export const getDatabaseCoverImageUrl = cache(async (db: Db) => {
+const getDatabaseCoverImageUrl = cache(async (db: Db) => {
     const notionClient = new Client({ auth: process.env.NOTION_API_KEY });
 
     const response = await notionClient.databases.retrieve({ database_id: getDatabaseId(db) });
@@ -179,6 +169,19 @@ export const getDatabaseCoverImageUrl = cache(async (db: Db) => {
             return responseAny.cover.file.url;
         }
     }
+})
+
+
+export const getDatabaseCoverImageBlobUrl = cache(async (db: Db) => {
+    const notionUrl = await getDatabaseCoverImageUrl(db);
+    if (!notionUrl) {
+        return undefined;
+    }
+
+    const filename = `${db}-cover.jpeg`;
+    const blob = await uploadImageToBlob({ imageUrl: notionUrl, fileName: filename });
+
+    return blob?.url;
 })
 
 
