@@ -1,5 +1,5 @@
 import { Grid, Card, Inset, AspectRatio, Heading, Box, Flex } from "@radix-ui/themes";
-import { getPublishedPagesIds, getPageCoverImageUrl, getPageTitle } from "@/app/api/notion";
+import { getPublishedPagesIds, getPageCoverImageBlobUrl, getPageTitle } from "@/app/api/notion";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -15,7 +15,7 @@ interface NextArticleThumbnailProps {
 
 
 async function NextArticleThumbnail({ articleId }: NextArticleThumbnailProps) {
-    const coverImageUrl = await getPageCoverImageUrl(articleId) || 'https://pbs.twimg.com/profile_banners/200216115/1713358979/1500x500';
+    const coverImageUrl = await getPageCoverImageBlobUrl(articleId) || 'https://pbs.twimg.com/profile_banners/200216115/1713358979/1500x500';
     const title = await getPageTitle(articleId);
     return (
         <Card asChild>

@@ -1,7 +1,7 @@
 import { Tag } from "@/app/api/notion";
 import { Card, Inset, Text, Flex, Skeleton, Heading, Box, Grid, Link as RadixLink, Separator } from "@radix-ui/themes";
 import BadgeMono from "@/app/_components/BadgeMono";
-import { getDate, getTags, getPageCoverImageUrl, getPageTitle } from "@/app/api/notion";
+import { getDate, getTags, getPageCoverImageBlobUrl, getPageTitle } from "@/app/api/notion";
 import React, { Suspense } from "react";
 import ArticleEmoji from "../../_components/PageEmoji";
 import Link from "next/link";
@@ -75,7 +75,7 @@ function ArticleRowSkeleton() {
 
 async function ArticleRowS({ article_id }: { article_id: string }) {
     const title = await getPageTitle(article_id);
-    //const coverImageUrl = await getPageCoverImageUrl(article_id);
+    //const coverImageUrl = await getPageCoverImageBlobUrl(article_id);
     const tags = await getTags({ pageId: article_id, property: 'Tags' });
     const date = await getDate(article_id);
     //const emoji = <ArticleEmoji article_id={article_id} />;

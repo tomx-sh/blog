@@ -1,6 +1,6 @@
 import { Tag } from "@/app/api/notion";
 import { Card, Inset, Text, Flex, Skeleton, Heading, Box, Badge, IconButton, Tooltip } from "@radix-ui/themes";
-import { getDate, getTags, getPageCoverImageUrl, getPageTitle, getProperty } from "@/app/api/notion";
+import { getDate, getTags, getPageCoverImageBlobUrl, getPageTitle, getProperty } from "@/app/api/notion";
 import React, { Suspense } from "react";
 import PageEmoji from "@/app/_components/PageEmoji";
 import Link from "next/link";
@@ -176,7 +176,7 @@ async function ProjectThumbnailS({ page_id }: { page_id: string }) {
     const props = {
         href: `/projects/${page_id}`,
         title: await getPageTitle(page_id),
-        coverImageUrl: await getPageCoverImageUrl(page_id) || 'https://pbs.twimg.com/profile_banners/200216115/1713358979/1500x500',
+        coverImageUrl: await getPageCoverImageBlobUrl(page_id) || 'https://pbs.twimg.com/profile_banners/200216115/1713358979/1500x500',
         features: await getTags({ pageId: page_id, property: 'Features' }),
         stack: await getTags({ pageId: page_id, property: 'Stack' }),
         date: await getDate(page_id),
