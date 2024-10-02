@@ -152,7 +152,7 @@ export const getPageCoverImageBlobUrl = cache(async (pageId: string) => {
 
     const imageBlob = await imageResponse.blob();
 
-    const slug = await getProperty({ pageId, property: 'Slug' });
+    const slug = await getProperty({ pageId, property: 'slug' });
     const filename = `${slug}-cover`;
 
     console.log('Uploading image to Vercel Blob:', filename);
