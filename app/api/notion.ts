@@ -137,6 +137,17 @@ const getPageCoverImageUrl = async (pageId: string) => {
     }
 }
 
+/** imageUrl provided by notion may expire. Identify it uniquely with its url and upload it to Vercel blob */
+export const getPageContentImageBlobUrl = cache(async (imageUrl: string) => {
+    const fullUrl = new URL(imageUrl);
+    const fileNameData = fullUrl.pathname; // Let's use this part of the URL as the filename. It shouln't change.
+    // Let's remove all the slashes from the filename
+    const filename = fileNameData.replace(/\//g, '');
+
+    const blob = await uploadImageToBlob({ imageUrl, fileName: filename });
+    return blob?.url;
+})
+
 
 export const getPageCoverImageBlobUrl = cache(async (pageId: string) => {    
     // Check if the image already exists in the blob
@@ -158,7 +169,7 @@ export const getPageCoverImageBlobUrl = cache(async (pageId: string) => {
         return undefined;
     }
 
-    const blob = await uploadImageToBlob({ imageUrl: notionUrl, fileName: filename });
+    const blob = await uploadImageToBlob({ imageUrl: notionUrl, fileName: filename, skipCheckIfExists: true });
 
     return blob?.url;
 })
@@ -185,7 +196,7 @@ export const makeCoverImageBlobUrl = cache(async (pageId: string) => {
 })
 
 
-const getDatabaseCoverImageUrl = cache(async (db: Db) => {
+const getDatabaseCoverImageUrl = cache(async (db: Db): Promise<string | undefined> => {
     const notionClient = new Client({ auth: process.env.NOTION_API_KEY });
 
     const response = await notionClient.databases.retrieve({ database_id: getDatabaseId(db) });
@@ -197,9 +208,9 @@ const getDatabaseCoverImageUrl = cache(async (db: Db) => {
         return undefined;
     } else {
         if (responseAny.cover.type === 'external') {
-            return responseAny.cover.external.url;
+            return responseAny.cover.external.url as string;
         } else if (responseAny.cover.type === 'file') {
-            return responseAny.cover.file.url;
+            return responseAny.cover.file.url as string;
         }
     }
 })
@@ -212,8 +223,12 @@ export const getDatabaseCoverImageBlobUrl = cache(async (db: Db) => {
     const blobBaseUrl = process.env.BLOB_BASE_URL;
 
     if (!blobBaseUrl) {
-        console.log('BLOB_BASE_URL is not defined in the environment variables');
-        return undefined;
+        if (process.env.NODE_ENV === 'development') {
+            return await getDatabaseCoverImageUrl(db);
+        } else {
+            console.error('BLOB_BASE_URL is not defined in the environment variables');
+            return undefined;
+        }
     }
 
 
