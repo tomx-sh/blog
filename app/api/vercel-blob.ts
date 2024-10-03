@@ -40,6 +40,11 @@ export async function uploadImageToBlob({ imageUrl, fileName }: uploadImageToBlo
 
 
 export async function checkIfImageExists(imageUrl: string): Promise<boolean> {
+    if (process.env.NODE_ENV === 'development') {
+        console.log('Skipping image existence check in development mode');
+        return true;
+    }
+    
     try {
         const blobDetails = await head(imageUrl);
         return true

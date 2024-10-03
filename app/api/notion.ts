@@ -182,6 +182,11 @@ export const makeCoverImageBlobUrl = cache(async ({pageId, slug}: {pageId: strin
     const filename = `${_slug}-cover.jpeg`;
     const blobBaseUrl = process.env.BLOB_BASE_URL;
 
+    if (!blobBaseUrl) {
+        console.log('BLOB_BASE_URL is not defined in the environment variables');
+        return { filename: undefined, url: undefined}
+    }
+
     return { filename: filename, url: `${blobBaseUrl}/${filename}`}
 })
 
