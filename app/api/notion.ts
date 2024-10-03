@@ -138,15 +138,9 @@ const getPageCoverImageUrl = async (pageId: string) => {
 }
 
 
-export const getPageCoverImageBlobUrl = cache(async (pageId: string) => {
-    const slug = await getProperty({ pageId, property: 'slug' }) as string | undefined;
-    if (!slug) {
-        console.error('Page does not have a slug');
-        return undefined;
-    }
-    
+export const getPageCoverImageBlobUrl = cache(async (pageId: string) => {    
     // Check if the image already exists in the blob
-    const { url: blobUrl, filename: filename } = await makeCoverImageBlobUrl({ pageId, slug });
+    const { url: blobUrl, filename: filename } = await makeCoverImageBlobUrl(pageId);
     if (blobUrl) {
         const exists = await checkIfImageExists(blobUrl);
         if (exists) {
@@ -171,15 +165,15 @@ export const getPageCoverImageBlobUrl = cache(async (pageId: string) => {
 
 
 /** Constructs the url the image cover of this page must be found to */
-export const makeCoverImageBlobUrl = cache(async ({pageId, slug}: {pageId: string, slug?: string}) => {
-    const _slug = slug || await getProperty({ pageId, property: 'slug' });
+export const makeCoverImageBlobUrl = cache(async (pageId: string) => {
+    const slug = await getProperty({ pageId, property: 'slug' });
 
-    if (!_slug) {
+    if (!slug) {
         console.error('Page does not have a slug');
         return { filename: undefined, url: undefined}
     }
 
-    const filename = `${_slug}-cover.jpeg`;
+    const filename = `${slug}-cover.jpeg`;
     const blobBaseUrl = process.env.BLOB_BASE_URL;
 
     if (!blobBaseUrl) {
@@ -213,12 +207,28 @@ const getDatabaseCoverImageUrl = cache(async (db: Db) => {
 
 /** Fetches the image from notion and saves it to Vercel blob. (Notion images expire) */
 export const getDatabaseCoverImageBlobUrl = cache(async (db: Db) => {
+
+    const filename = `${db}-cover.jpeg`;
+    const blobBaseUrl = process.env.BLOB_BASE_URL;
+
+    if (!blobBaseUrl) {
+        console.log('BLOB_BASE_URL is not defined in the environment variables');
+        return undefined;
+    }
+
+
+    const blobUrl = `${blobBaseUrl}/${filename}`;
+    const exists = await checkIfImageExists(blobUrl);
+
+    if (exists) {
+        return blobUrl;
+    }
+
     const notionUrl = await getDatabaseCoverImageUrl(db);
     if (!notionUrl) {
         return undefined;
     }
 
-    const filename = `${db}-cover.jpeg`;
     const blob = await uploadImageToBlob({ imageUrl: notionUrl, fileName: filename });
 
     return blob?.url;
