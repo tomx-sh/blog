@@ -1,4 +1,4 @@
-import { PutBlobResult, put } from "@vercel/blob";
+import { PutBlobResult, put, head } from "@vercel/blob";
 
 
 interface uploadImageToBlobArgs {
@@ -33,7 +33,18 @@ export async function uploadImageToBlob({ imageUrl, fileName }: uploadImageToBlo
     const imageBlob = await imageResponse.blob();
 
     console.log('Uploading image to blob:', fileName);
-    const blob = await put(fileName, imageBlob, { access: 'public' });//, token: process.env.BLOB_READ_WRITE_TOKEN });
+    const blob = await put(fileName, imageBlob, { access: 'public', addRandomSuffix: false });
 
     return blob;
+}
+
+
+export async function checkIfImageExists(imageUrl: string): Promise<boolean> {
+    try {
+        const blobDetails = await head(imageUrl);
+        return true
+    } catch (error) {
+        console.log('Image does not exist:', imageUrl);
+        return false
+    }
 }

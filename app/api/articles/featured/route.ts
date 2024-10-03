@@ -1,5 +1,5 @@
 import { getFeaturedArticlesPagesIds, getPageTitle, getPageCoverImageBlobUrl, getDate, getTags, Tag, getPageEmoji } from "../../notion";
-
+import { checkIfImageExists } from "../../vercel-blob";
 
 interface ArticleData {
     //id: string,
@@ -24,12 +24,14 @@ export async function GET(req: Request) {
 
     const articles = await Promise.all(
         featuredArticleIds.map(async (pageId) => {
-            const title = await getPageTitle(pageId);
-            const coverImageUrl = await getPageCoverImageBlobUrl(pageId) || 'https://pbs.twimg.com/profile_banners/200216115/1713358979/1500x500';
-            const date = await getDate(pageId);
-            const tags = await getTags({ pageId, property: 'Tags' });
-            const emoji = await getPageEmoji(pageId);
 
+            const titlePromise = getPageTitle(pageId);
+            const datePromise = getDate(pageId);
+            const tagsPromise = getTags({ pageId, property: 'Tags' });
+            const emojiPromise = getPageEmoji(pageId);
+            const coverImageUrlPromise = getPageCoverImageBlobUrl(pageId)|| 'https://pbs.twimg.com/profile_banners/200216115/1713358979/1500x500';
+
+            const [title, date, tags, emoji, coverImageUrl] = await Promise.all([titlePromise, datePromise, tagsPromise, emojiPromise, coverImageUrlPromise]);
 
             return {
                 url:`${protocol}://${host}/${pageId}`,

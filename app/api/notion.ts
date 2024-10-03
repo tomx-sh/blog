@@ -2,7 +2,7 @@ import { Client, isFullPage } from '@notionhq/client';
 import { NotionToMarkdown } from 'notion-to-md';
 import { cache } from 'react';
 import { revalidatePath } from 'next/cache';
-import { uploadImageToBlob } from './vercel-blob';
+import { uploadImageToBlob, checkIfImageExists } from './vercel-blob';
 
 
 export type Db = "articles" | "projects"
@@ -139,16 +139,50 @@ const getPageCoverImageUrl = async (pageId: string) => {
 
 
 export const getPageCoverImageBlobUrl = cache(async (pageId: string) => {
+    const slug = await getProperty({ pageId, property: 'slug' }) as string | undefined;
+    if (!slug) {
+        console.error('Page does not have a slug');
+        return undefined;
+    }
+    
+    // Check if the image already exists in the blob
+    const { url: blobUrl, filename: filename } = await makeCoverImageBlobUrl({ pageId, slug });
+    if (blobUrl) {
+        const exists = await checkIfImageExists(blobUrl);
+        if (exists) {
+            return blobUrl;
+        }
+    }
+
+    if (!filename) {
+        console.error('Filename is undefined');
+        return undefined;
+    }
+
     const notionUrl = await getPageCoverImageUrl(pageId);
     if (!notionUrl) {
         return undefined;
     }
 
-    const slug = await getProperty({ pageId, property: 'slug' });
-    const filename = `${slug}-cover.jpeg`;
     const blob = await uploadImageToBlob({ imageUrl: notionUrl, fileName: filename });
 
     return blob?.url;
+})
+
+
+/** Constructs the url the image cover of this page must be found to */
+export const makeCoverImageBlobUrl = cache(async ({pageId, slug}: {pageId: string, slug?: string}) => {
+    const _slug = slug || await getProperty({ pageId, property: 'slug' });
+
+    if (!_slug) {
+        console.error('Page does not have a slug');
+        return { filename: undefined, url: undefined}
+    }
+
+    const filename = `${_slug}-cover.jpeg`;
+    const blobBaseUrl = process.env.BLOB_BASE_URL;
+
+    return { filename: filename, url: `${blobBaseUrl}/${filename}`}
 })
 
 
@@ -172,6 +206,7 @@ const getDatabaseCoverImageUrl = cache(async (db: Db) => {
 })
 
 
+/** Fetches the image from notion and saves it to Vercel blob. (Notion images expire) */
 export const getDatabaseCoverImageBlobUrl = cache(async (db: Db) => {
     const notionUrl = await getDatabaseCoverImageUrl(db);
     if (!notionUrl) {
