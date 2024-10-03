@@ -26,9 +26,9 @@ export async function uploadImageToBlob({ imageUrl, fileName, skipCheckIfExists=
 
     // Before uploading the image, check if it already exists in the blob storage
     if(!skipCheckIfExists) {
-        const basePath = process.env.BLOB_BASE_PATH
+        const basePath = process.env.BLOB_BASE_URL
         if (!basePath) {
-            console.error('BLOB_BASE_PATH is not defined in the environment variables');
+            console.error('BLOB_BASE_URL is not defined in the environment variables');
             return undefined;
         }
         const blobUrl = `${basePath}/${fileName}`;
