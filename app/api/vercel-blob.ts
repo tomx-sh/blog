@@ -1,4 +1,4 @@
-import { PutBlobResult, put, head } from "@vercel/blob";
+import { PutBlobResult, put, head, BlobNotFoundError } from "@vercel/blob";
 
 
 interface uploadImageToBlobArgs {
@@ -44,12 +44,16 @@ export async function checkIfImageExists(imageUrl: string): Promise<boolean> {
         console.log('Skipping image existence check in development mode');
         return true;
     }
-    
+
     try {
         const blobDetails = await head(imageUrl);
         return true
     } catch (error) {
-        console.log('Image does not exist:', imageUrl);
-        return false
+        if (error instanceof BlobNotFoundError) {
+            console.log('Image does not exist:', imageUrl, error.message);
+            return false;
+        }
+        console.log('Error checking if image exists:', error);
+        return false;
     }
 }
