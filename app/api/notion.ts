@@ -142,9 +142,9 @@ export const getPageContentImageBlobUrl = cache(async (imageUrl: string) => {
     const fullUrl = new URL(imageUrl);
     const fileNameData = fullUrl.pathname; // Let's use this part of the URL as the filename. It shouln't change.
     // Let's remove all the slashes from the filename
-    const filename = fileNameData.replace(/\//g, '');
+    const fileName = fileNameData.replace(/\//g, '');
 
-    const blob = await uploadImageToBlob({ imageUrl, fileName: filename });
+    const blob = await uploadImageToBlob({ imageUrl, fileName });
     return blob?.url;
 })
 

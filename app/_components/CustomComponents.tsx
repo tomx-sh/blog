@@ -44,7 +44,7 @@ function CustomParagraph(props: any) {
 }
 
 async function CustomImage(props: any) {
-    const imageUrl = await getPageContentImageBlobUrl(props.src) || props.src;
+    const imageUrl = await getPageContentImageBlobUrl(props.src);
     /* eslint-disable-next-line @next/next/no-img-element */
     return <img src={imageUrl} alt={props.alt} style={{ maxWidth: '100%', position: 'relative', left: '50%', transform: 'translateX(-50%)' }} />
 }
