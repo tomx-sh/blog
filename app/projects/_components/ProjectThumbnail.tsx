@@ -29,7 +29,7 @@ const iconSize = 16;
 
 function TooltipIcon({ children, content }: { children: React.ReactNode, content: string }) {
     return (
-        <Tooltip content={content} side='left' align='center' style={{cursor:'unset'}}>
+        <Tooltip content={content} side='left' align='center'>{/* style={{cursor:'unset'}}>*/}
             {children}
         </Tooltip>
     )
@@ -43,7 +43,7 @@ function ProOrPersoIcon({ type }: { type: 'Pro' | 'Perso' }) {
     }
 }
 
-function LinkTooltipIcon({ href, content, children }: { href: string, content: string, children: React.ReactNode }) {
+/*function LinkTooltipIcon({ href, content, children }: { href: string, content: string, children: React.ReactNode }) {
     return (
         <LinkIconButton href={href} aria-label={content} size='1' variant='ghost'>
             <Tooltip content={content} side='left' align='center'>
@@ -51,7 +51,7 @@ function LinkTooltipIcon({ href, content, children }: { href: string, content: s
             </Tooltip>
         </LinkIconButton>
     )
-}
+}*/
 
 
 
@@ -59,7 +59,7 @@ function ProjectThumbnailView({ title, description, type, coverImageUrl, feature
 
     return (
         <Card asChild>
-            <Link href={href || '#'} style={{cursor:'default'}}>
+            <Link href={href || '#'}>{/* style={{cursor:'default'}}>*/}
                 <Flex direction='column' height='100%' justify='between' gap='2'>
 
 
@@ -102,15 +102,15 @@ function ProjectThumbnailView({ title, description, type, coverImageUrl, feature
                                 <ProOrPersoIcon type={type} />
 
                                 { githubUrl &&
-                                    <LinkTooltipIcon href={githubUrl} content='View on GitHub'>
+                                    <TooltipIcon content='Public GitHub'>
                                         <Github size={iconSize} />
-                                    </LinkTooltipIcon>
+                                    </TooltipIcon>
                                 }
 
                                 { visitUrl &&
-                                    <LinkTooltipIcon href={visitUrl} content='Visit project'>
+                                    <TooltipIcon content='Public URL'>
                                         <ExternalLink size={iconSize} />
-                                    </LinkTooltipIcon>
+                                    </TooltipIcon>
                                 }   
                             </Flex>
 
