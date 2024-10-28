@@ -56,7 +56,7 @@ async function CustomImage(props: any) {
                 left: '50%',
                 transform: 'translateX(-50%)',
                 borderRadius: 'var(--radius-2)',
-                boxShadow: 'var(--shadow-5)',
+                boxShadow: 'var(--shadow-3)',
             }}
         />
     )
