@@ -10,7 +10,7 @@ export default function BadgeMono(props: BadgeMonoProps) {
     return (
         <Badge
             {...props} className={`${sf_mono.variable} font-mono`}
-            style={{fontFamily: 'var(--sf-mono)'}}
+            style={{fontFamily: 'var(--sf-mono)', fontWeight: 'normal'}}
         />
     )
 }
