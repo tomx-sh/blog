@@ -1,5 +1,5 @@
 import { getFeaturedArticlesPagesIds, getPageTitle, getPageCoverImageBlobUrl, getDate, getTags, Tag, getPageEmoji } from "../../notion";
-import { checkIfImageExists } from "../../vercel-blob";
+
 
 interface ArticleData {
     //id: string,
