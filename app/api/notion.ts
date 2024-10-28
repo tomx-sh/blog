@@ -2,7 +2,7 @@ import { Client, isFullPage } from '@notionhq/client';
 import { NotionToMarkdown } from 'notion-to-md';
 import { cache } from 'react';
 import { revalidatePath } from 'next/cache';
-import { uploadImageToBlob, checkIfImageExists } from './vercel-blob';
+import { uploadImageToBlob, checkIfBlobExists } from './vercel-blob';
 
 
 export type Db = "articles" | "projects"
@@ -150,10 +150,14 @@ export const getPageContentImageBlobUrl = cache(async (imageUrl: string) => {
 
 
 export const getPageCoverImageBlobUrl = cache(async (pageId: string) => {    
+    if (process.env.NODE_ENV === 'development') {
+        return await getPageCoverImageUrl(pageId);
+    }
+
     // Check if the image already exists in the blob
-    const { url: blobUrl, filename: filename } = await makeCoverImageBlobUrl(pageId);
+    const { url: blobUrl, filename: filename } = await makeCoverImageBlobUrl(pageId); // If it exists, it will be at this url
     if (blobUrl) {
-        const exists = await checkIfImageExists(blobUrl);
+        const exists = await checkIfBlobExists(blobUrl);
         if (exists) {
             return blobUrl;
         }
@@ -170,7 +174,6 @@ export const getPageCoverImageBlobUrl = cache(async (pageId: string) => {
     }
 
     const blob = await uploadImageToBlob({ imageUrl: notionUrl, fileName: filename, skipCheckIfExists: true });
-
     return blob?.url;
 })
 
@@ -233,7 +236,7 @@ export const getDatabaseCoverImageBlobUrl = cache(async (db: Db) => {
 
 
     const blobUrl = `${blobBaseUrl}/${filename}`;
-    const exists = await checkIfImageExists(blobUrl);
+    const exists = await checkIfBlobExists(blobUrl);
 
     if (exists) {
         return blobUrl;

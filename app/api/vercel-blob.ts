@@ -32,7 +32,7 @@ export async function uploadImageToBlob({ imageUrl, fileName, skipCheckIfExists=
             return undefined;
         }
         const blobUrl = `${basePath}/${fileName}`;
-        const imageExists = await checkIfImageExists(blobUrl);
+        const imageExists = await checkIfBlobExists(blobUrl);
         if (imageExists) {
             console.log('Image already exists in blob:', fileName);
             return imageExists;
@@ -56,27 +56,13 @@ export async function uploadImageToBlob({ imageUrl, fileName, skipCheckIfExists=
 }
 
 
-export async function checkIfImageExists(imageUrl: string): Promise<HeadBlobResult | false> {
-    if (process.env.NODE_ENV === 'development') {
-        console.log('Skipping image existence check in development mode');
-        return {
-            url: imageUrl,
-            downloadUrl: imageUrl,
-            size: 0,
-            uploadedAt: new Date(),
-            pathname: imageUrl,
-            contentType: 'image/jpeg',
-            contentDisposition: 'inline',
-            cacheControl: 'public, max-age=31536000, s-maxage=31536000'
-        }
-    }
-
+export async function checkIfBlobExists(blobUrl: string): Promise<HeadBlobResult | false> {
     try {
-        const blobDetails = await head(imageUrl);
+        const blobDetails = await head(blobUrl);
         return blobDetails
     } catch (error) {
         if (error instanceof BlobNotFoundError) {
-            console.log('Image does not exist:', imageUrl, error.message);
+            console.log('Image does not exist:', blobUrl, error.message);
             return false;
         }
         console.log('Error checking if image exists:', error);
