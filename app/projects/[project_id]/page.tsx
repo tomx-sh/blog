@@ -1,13 +1,14 @@
-import { Separator, Container, Section, Flex, Heading, Button, Grid, Card, Avatar, Text } from '@radix-ui/themes';
+import { Separator, Container, Section, Flex, Button } from '@radix-ui/themes';
 import Link from 'next/link';
 import PageDate from '@/app/_components/PageDate';
 import ProjectTitle from './_components/ProjectTitle';
 import PageBadges from '@/app/_components/PageBadges';
 import PageContent from '@/app/_components/PageContent';
-import { ChevronLeft, ChevronUp, ChevronsLeft } from 'lucide-react';
+import {  ChevronUp, ChevronsLeft } from 'lucide-react';
 import PageCover from '@/app/_components/PageCover';
 import { getPublishedPagesIds } from '@/app/api/notion';
 import ProjectDescription from './_components/ProjectDescription';
+import Details from './_components/Details';
 
 
 
@@ -31,10 +32,13 @@ export default async function Page({ params }: { params: {project_id: string}}) 
 
                 <Separator size='4' my='4'/>
 
-                <Flex justify='between'>
+                <Flex justify='between' gap='2'>
                     <PageBadges page_id={params.project_id} tagsProperty='Stack' />
                     <PageDate page_id={params.project_id} format={{ year: 'numeric'}} />
                 </Flex>
+
+                <Details project_id={params.project_id} mt='5'/>
+
             </Section>
 
             <Section>
