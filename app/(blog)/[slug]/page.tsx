@@ -9,42 +9,44 @@ import PageCover from '../../_components/PageCover';
 import PageEmoji from '../../_components/PageEmoji';
 import HomeButton from '../_components/HomeButton';
 import NextArticles from './_components/NextArticles';
-import { getPublishedPagesIds } from '@/app/api/notion';
+import { getPublishedSlugs, getProperty, getPageIdFromSlug } from '@/app/api/notion';
 import '@radix-ui/themes/styles.css';
 import '@/app/globals.css';
 
 
 
 export async function generateStaticParams() {
-    const articleIds = await getPublishedPagesIds('articles');
-    return articleIds.map(article_id => ({ params: { article_id } }));
+    const slugs = await getPublishedSlugs('articles');
+    return slugs.map(slug => ({ params: { slug } }));
 }
 
 
-export default async function Page({ params }: { params: {article_id: string}}) {
+export default async function Page({ params }: { params: {slug: string}}) {
+    const article_id = await getPageIdFromSlug(params.slug, 'articles');
+    if (!article_id) throw new Error('Page not found');
 
     return (
         <Container size='2' mx='5'>
 
-            <PageCover type='page' id={params.article_id} width='100%' height='200px'/>
+            <PageCover type='page' id={article_id} width='100%' height='200px'/>
 
             <Section py='4'>
 
                 <Flex direction='column' align='center' gap='4'>
-                    <PageEmoji page_id={params.article_id} size='8' />
-                    <ArticleTitle article_id={params.article_id} />
+                    <PageEmoji page_id={article_id} size='8' />
+                    <ArticleTitle article_id={article_id} />
                 </Flex>
 
                 <Separator size='4' my='4'/>
 
                 <Flex justify='between'>
-                    <ArticleBadges page_id={params.article_id} />
-                    <ArticleDate page_id={params.article_id} />
+                    <ArticleBadges page_id={article_id} />
+                    <ArticleDate page_id={article_id} />
                 </Flex>
             </Section>
 
             <Section>
-                <ArticleContent page_id={params.article_id} />
+                <ArticleContent page_id={article_id} />
             </Section>
 
             <Section>
@@ -73,7 +75,7 @@ export default async function Page({ params }: { params: {article_id: string}}) 
                     </Flex>
                 </Flex>
 
-                <NextArticles currentArticleId={params.article_id} />
+                <NextArticles currentArticleId={article_id} />
 
                 <Heading as='h3' size='3' color='gray' weight='regular' mt='5'>About the author</Heading>
 

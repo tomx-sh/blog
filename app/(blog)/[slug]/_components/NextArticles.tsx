@@ -1,5 +1,5 @@
 import { Grid, Card, Inset, AspectRatio, Heading, Box, Flex } from "@radix-ui/themes";
-import { getPublishedPagesIds, getPageCoverImageBlobUrl, getPageTitle } from "@/app/api/notion";
+import { getPublishedIds, getPageCoverImageBlobUrl, getPageTitle, getProperty } from "@/app/api/notion";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -17,9 +17,11 @@ interface NextArticleThumbnailProps {
 async function NextArticleThumbnail({ articleId }: NextArticleThumbnailProps) {
     const coverImageUrl = await getPageCoverImageBlobUrl(articleId) || 'https://pbs.twimg.com/profile_banners/200216115/1713358979/1500x500';
     const title = await getPageTitle(articleId);
+    const slug = await getProperty({ pageId: articleId, property: 'slug' });
+    
     return (
         <Card asChild>
-            <Link href={`/${articleId}`}>
+            <Link href={`/${slug}`}>
 
 
                 <Inset clip="padding-box" side="top" pb="current">
@@ -45,7 +47,7 @@ async function NextArticleThumbnail({ articleId }: NextArticleThumbnailProps) {
 
 
 export default async function NextArticles({ currentArticleId }: NextArticlesProps) {
-    let articleIds = await getPublishedPagesIds('articles');
+    let articleIds = await getPublishedIds('articles');
     articleIds = articleIds.filter((id) => id !== currentArticleId);
     const recentArticles = articleIds.slice(0, 3);
 

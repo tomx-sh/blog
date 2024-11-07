@@ -3,6 +3,7 @@ import { NotionToMarkdown } from 'notion-to-md';
 import { cache } from 'react';
 import { revalidatePath } from 'next/cache';
 import { uploadImageToBlob, checkIfBlobExists } from './vercel-blob';
+import { MultiSelectPropertyItemObjectResponse } from '@notionhq/client/build/src/api-endpoints';
 
 
 export type Db = "articles" | "projects"
@@ -27,9 +28,8 @@ export const getMarkdown = cache(async (pageId: string) => {
     return mdString;
 })
 
-
-export const getPublishedPagesIds = cache(async (db: Db) => {
-    const notionClient   = new Client({ auth: process.env.NOTION_API_KEY });
+const getPublishedPages = cache(async (db: Db) => {
+    const notionClient = new Client({ auth: process.env.NOTION_API_KEY });
 
     const response = await notionClient.databases.query({
         database_id: getDatabaseId(db),
@@ -37,22 +37,14 @@ export const getPublishedPagesIds = cache(async (db: Db) => {
         sorts: [{ property: 'Date', direction: 'descending' }]
     });
 
-    const pageIds: string[] = [];
-    for (const page of response.results) {
-        if (isFullPage(page)) {
-            pageIds.push(page.id);
-        }
-    }
-
-    return pageIds;
+    return response.results;
 })
 
-
-export const getFeaturedArticlesPagesIds = cache(async () => {
+const getFeaturedPages = cache(async (db: Db) => {
     const notionClient = new Client({ auth: process.env.NOTION_API_KEY });
 
     const response = await notionClient.databases.query({
-        database_id: getDatabaseId('articles'),
+        database_id: getDatabaseId(db),
         filter: {
             and: [
                 { property: 'Publier', checkbox: { equals: true } },
@@ -62,8 +54,15 @@ export const getFeaturedArticlesPagesIds = cache(async () => {
         sorts: [{ property: 'Date', direction: 'descending' }]
     });
 
+    return response.results;
+});
+
+
+export const getPublishedIds = cache(async (db: Db) => {
+    const pages = await getPublishedPages(db);
+
     const pageIds: string[] = [];
-    for (const page of response.results) {
+    for (const page of pages) {
         if (isFullPage(page)) {
             pageIds.push(page.id);
         }
@@ -72,22 +71,42 @@ export const getFeaturedArticlesPagesIds = cache(async () => {
     return pageIds;
 })
 
-export const getFeaturedProjectsPagesIds = cache(async () => {
+export const getPublishedSlugs = cache(async (db: Db) => {
+    const pages = await getPublishedPages(db);
+
+    const slugs: string[] = [];
+    for (const page of pages) {
+        if (isFullPage(page)) {
+            const slugProperty = page.properties.slug
+            if (slugProperty && slugProperty.type === 'rich_text') {
+                slugs.push(slugProperty.rich_text[0].plain_text);
+            }
+        }
+    }
+
+    return slugs;
+})
+
+export const getPageIdFromSlug = cache(async (slug: string, db: Db) => {
     const notionClient = new Client({ auth: process.env.NOTION_API_KEY });
 
     const response = await notionClient.databases.query({
-        database_id: getDatabaseId('projects'),
-        filter: {
-            and: [
-                { property: 'Publier', checkbox: { equals: true } },
-                { property: 'Featured', checkbox: { equals: true } }
-            ]
-        },
-        sorts: [{ property: 'Date', direction: 'descending' }]
+        database_id: getDatabaseId(db),
+        filter: { property: 'slug', rich_text: { equals: slug } }
     });
 
+    if (response.results.length === 0) {
+        return undefined;
+    }
+
+    return response.results[0].id;
+})
+
+export const getFeaturedIds = cache(async (db: Db) => {
+    const pages = await getFeaturedPages(db);
+
     const pageIds: string[] = [];
-    for (const page of response.results) {
+    for (const page of pages) {
         if (isFullPage(page)) {
             pageIds.push(page.id);
         }
@@ -95,6 +114,23 @@ export const getFeaturedProjectsPagesIds = cache(async () => {
 
     return pageIds;
 })
+
+export const getFeaturedSlugs = cache(async (db: Db) => {
+    const pages = await getFeaturedPages(db);
+
+    const slugs: string[] = [];
+    for (const page of pages) {
+        if (isFullPage(page)) {
+            const slugProperty = page.properties.slug
+            if (slugProperty && slugProperty.type === 'rich_text') {
+                slugs.push(slugProperty.rich_text[0].plain_text);
+            }
+        }
+    }
+
+    return slugs;
+});
+
 
 
 export const getNotionPage = cache(async (pageId: string) => {
@@ -267,7 +303,7 @@ export const getPageEmoji = cache(async (pageId: string) => {
     return null;
 })
 
-
+// TODO: use getProperty
 export const getDate = cache(async (pageId: string) => {
     const notionClient = new Client({ auth: process.env.NOTION_API_KEY });
 
@@ -291,7 +327,7 @@ export interface Tag {
 
 export type TagProperty = 'Tags' | 'Features' | 'Stack'
 
-
+// TODO: use getProperty
 export const getTags = cache(async ({ pageId, property }: { pageId: string, property: TagProperty }) => {
     const notionClient = new Client({ auth: process.env.NOTION_API_KEY });
 
@@ -312,14 +348,9 @@ export const getProperty = cache(async ({ pageId, property }: { pageId: string, 
         { page_id: pageId, property_id: property }
     )
 
-    const responseType = response.type;
+    //console.log('Response', response);
 
-    //console.log('response:', response);
-    //console.log('responseType:', responseType);
-
-    const responseAny = response as any; // Unfortunatelly Notion's API doesn't provide a handy type for this response
-
-    switch (responseType) {
+    switch (response.type) {
         case 'title':
             return response.title.plain_text;
         case 'rich_text':
@@ -329,7 +360,7 @@ export const getProperty = cache(async ({ pageId, property }: { pageId: string, 
         case 'select':
             return response.select?.name;
         case 'multi_select':
-            return response.multi_select.map((item: any) => item.name as string);
+            return response.multi_select.map((item: {name: string}) => item.name);
         case 'date':
             return response.date?.start;
         case 'checkbox':
@@ -341,8 +372,15 @@ export const getProperty = cache(async ({ pageId, property }: { pageId: string, 
         case 'phone_number':
             return response.phone_number
         case 'property_item':
-            return responseAny.results[0].rich_text.text.content as string;
+            const res = response.results[0]
+            if (res.type === 'rich_text') {
+                return res.rich_text.plain_text;
+            } else {
+                return 'Unknown property item type';
+            }
+
         default:
+            console.log('Unknown type for property', property, 'for page', pageId);
             return 'Unknown type';
     }
 })

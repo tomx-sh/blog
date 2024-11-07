@@ -1,4 +1,4 @@
-import { getFeaturedProjectsPagesIds, getPageTitle, getPageCoverImageBlobUrl, getDate, getTags, Tag, TagProperty, getProperty } from "../../notion";
+import { getFeaturedIds, getPageTitle, getPageCoverImageBlobUrl, getDate, getTags, Tag, TagProperty, getProperty } from "../../notion";
 
 
 interface ProjectData {
@@ -24,12 +24,12 @@ export async function GET(req: Request) {
     const host = req.headers.get('host') || 'localhost:3000';
     const protocol = req.headers.get('x-forwarded-proto') || (host.includes('localhost') ? 'http' : 'https');
 
-    const featuredProjectsIds = await getFeaturedProjectsPagesIds();
+    const featuredProjectsIds = await getFeaturedIds('projects');
 
     const projects = await Promise.all(
         featuredProjectsIds.map(async (pageId) => {
             return {
-                url: `${protocol}://${host}/projects/${pageId}`,
+                url: `${protocol}://${host}/projects/${await getProperty({ pageId, property: 'slug' })}`,
                 title: await getPageTitle(pageId),
                 description: await getProperty({ pageId, property: 'Description' }),
                 coverImageUrl: await getPageCoverImageBlobUrl(pageId) || 'https://pbs.twimg.com/profile_banners/200216115/1713358979/1500x500',

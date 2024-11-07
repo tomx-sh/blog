@@ -5,12 +5,14 @@ export async function POST(req: NextRequest){
     const params = req.nextUrl.searchParams;
     const slug = params.get("slug");
 
-    if(!slug){
-        revalidatePath("/", "page");
-        return NextResponse.redirect("/");
+    // Revalidate the home page containing the list of articles
+    revalidatePath("/", "page");
 
-    } else {
+    // Revalidate the article page
+    if (slug) {
         revalidatePath(`/${slug}`, "page");
         return NextResponse.redirect(`/${slug}`);
     }
+
+    return NextResponse.redirect("/");
 }

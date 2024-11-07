@@ -174,7 +174,7 @@ function ProjectThumbnailSkeleton() {
 async function ProjectThumbnailS({ page_id }: { page_id: string }) {
 
     const props = {
-        href: `/projects/${page_id}`,
+        href: `/projects/${await getProperty({ pageId: page_id, property: 'slug' })}`,
         title: await getPageTitle(page_id),
         coverImageUrl: await getPageCoverImageBlobUrl(page_id) || 'https://pbs.twimg.com/profile_banners/200216115/1713358979/1500x500',
         features: await getTags({ pageId: page_id, property: 'Features' }),

@@ -1,11 +1,11 @@
-import { getPublishedPagesIds } from '../api/notion';
+import { getPublishedIds } from '../api/notion';
 import { Container, Section, Grid, Heading } from '@radix-ui/themes';
 import PageCover from '../_components/PageCover';
 import ProjectThumbnail from './_components/ProjectThumbnail';
 
 
 export default async function Home() {
-    const projectsIds = await getPublishedPagesIds('projects');
+    const projectsIds = await getPublishedIds('projects');
 
     return (
         <Container size='3' mx='5'>

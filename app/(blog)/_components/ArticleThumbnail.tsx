@@ -1,6 +1,6 @@
 import { Tag } from "@/app/api/notion";
 import { Card, Inset, Text, Flex, Skeleton, Heading, Box, Badge } from "@radix-ui/themes";
-import { getDate, getTags, getPageCoverImageBlobUrl, getPageTitle } from "@/app/api/notion";
+import { getDate, getTags, getPageCoverImageBlobUrl, getPageTitle, getProperty } from "@/app/api/notion";
 import React, { Suspense } from "react";
 import PageEmoji from "../../_components/PageEmoji";
 import Link from "next/link";
@@ -104,13 +104,14 @@ function ArticleThumbnailSkeleton() {
 }
 
 async function ArticleThumbnailS({ article_id }: { article_id: string }) {
+    const slug = await getProperty({ pageId: article_id, property: 'slug' });
     const title = await getPageTitle(article_id);
     const coverImageUrl = await getPageCoverImageBlobUrl(article_id) || 'https://pbs.twimg.com/profile_banners/200216115/1713358979/1500x500';
     const tags = await getTags({ pageId: article_id, property: 'Tags' });
     const date = await getDate(article_id);
     const emoji = <PageEmoji page_id={article_id} />;
 
-    return <ArticleThumbnailView title={title} coverImageUrl={coverImageUrl} tags={tags} date={date} emoji={emoji} href={`/${article_id}`} />
+    return <ArticleThumbnailView title={title} coverImageUrl={coverImageUrl} tags={tags} date={date} emoji={emoji} href={`/${slug}`} />
 }
 
 
