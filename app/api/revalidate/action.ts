@@ -12,5 +12,5 @@ export async function revalidate({ path, password }: RevalidateArgs) {
         throw new Error('Invalid password')
     }
 
-    revalidatePath(path)
+    revalidatePath(path, 'page')
 }
