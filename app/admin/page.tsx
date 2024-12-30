@@ -11,8 +11,12 @@ export default function Page() {
         const formData = new FormData(event.currentTarget)
         const path = formData.get('path') as string
         const password = formData.get('password') as string
-        await revalidate({ path, password })
-        router.push(path)
+        const { error } = await revalidate({ path, password })
+        if (error) {
+            alert(error)
+        } else {
+            router.push(path)
+        }
     }
 
 
@@ -20,7 +24,7 @@ export default function Page() {
         <Container>
             <Section>
                 <form method="post" onSubmit={onSubmit}>
-                    <Flex gap='3' direction='column'>
+                    <Flex gap='3' direction='column' maxWidth='300px' mx='auto'>
                         <TextField.Root placeholder='path' name='path' />
                         <TextField.Root placeholder='password' name='password' type="password" />
                         <Button type="submit">Revalidate</Button>

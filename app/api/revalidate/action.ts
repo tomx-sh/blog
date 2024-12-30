@@ -2,15 +2,18 @@
 import { revalidatePath } from "next/cache"
 
 
-interface RevalidateArgs {
+
+
+export async function revalidate(args: {
     path: string
     password: string
-}
-
-export async function revalidate({ path, password }: RevalidateArgs) {
-    if (password !== process.env.ADMIN_PASSWORD) {
-        throw new Error('Invalid password')
+}): Promise<{
+    error: string | null
+}> {
+    if (args.password !== process.env.ADMIN_PASSWORD) {
+        return { error: 'Invalid password' }
     }
 
-    revalidatePath(path, 'page')
+    revalidatePath(args.path, 'page')
+    return { error: null }
 }
