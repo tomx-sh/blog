@@ -2,14 +2,22 @@
 import { Container, Section, TextField, Button, Flex } from "@radix-ui/themes"
 import { revalidate } from "../api/revalidate/action"
 import { useRouter } from "next/navigation"
-import { useState } from "react"
+import { useFormStatus } from "react-dom"
+
+
+function SubmitButton() {
+    const { pending } = useFormStatus()
+    return (
+        <Button type="submit" disabled={pending}>
+            {pending ? 'Revalidating...' : 'Revalidate'}
+        </Button>
+    )
+}
 
 export default function Page() {
     const router = useRouter()
-    const [isPending, setIsPending] = useState(false)
 
     async function onSubmit(formData: FormData) {
-        setIsPending(true)
         const { error } = await revalidate(formData)
         if (error) {
             alert(error)
@@ -17,7 +25,6 @@ export default function Page() {
             const path = formData.get('path') as string
             router.push(path)
         }
-        setIsPending(false)
     }
 
     return (
@@ -27,9 +34,7 @@ export default function Page() {
                     <Flex gap='3' direction='column' maxWidth='300px' mx='auto'>
                         <TextField.Root placeholder='path' name='path' type='text' />
                         <TextField.Root placeholder='password' name='password' type="password" />
-                        <Button type="submit" disabled={isPending}>
-                            {isPending ? 'Revalidating...' : 'Revalidate'}
-                        </Button>
+                        <SubmitButton />
                     </Flex>
                 </form>
             </Section>
