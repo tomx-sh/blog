@@ -8,30 +8,28 @@ export default function Page() {
     const router = useRouter()
     const [isPending, setIsPending] = useState(false)
 
-    const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault()
+    async function onSubmit(formData: FormData) {
         setIsPending(true)
-        const formData = new FormData(event.currentTarget)
-        const path = formData.get('path') as string
-        const password = formData.get('password') as string
-        const { error } = await revalidate({ path, password })
+        const { error } = await revalidate(formData)
         if (error) {
             alert(error)
         } else {
+            const path = formData.get('path') as string
             router.push(path)
         }
         setIsPending(false)
     }
 
-
     return (
         <Container>
             <Section>
-                <form method="post" onSubmit={onSubmit}>
+                <form action={onSubmit}>
                     <Flex gap='3' direction='column' maxWidth='300px' mx='auto'>
-                        <TextField.Root placeholder='path' name='path' />
+                        <TextField.Root placeholder='path' name='path' type='text' />
                         <TextField.Root placeholder='password' name='password' type="password" />
-                        <Button type="submit" loading={isPending}>Revalidate</Button>
+                        <Button type="submit" disabled={isPending}>
+                            {isPending ? 'Revalidating...' : 'Revalidate'}
+                        </Button>
                     </Flex>
                 </form>
             </Section>
