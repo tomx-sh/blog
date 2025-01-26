@@ -271,12 +271,12 @@ export const getDatabaseCoverImageBlobUrl = cache(async (db: Db) => {
     }
 
 
-    const blobUrl = `${blobBaseUrl}/${filename}`;
-    const exists = await checkIfBlobExists(blobUrl);
+    //const blobUrl = `${blobBaseUrl}/${filename}`;
+    // const exists = await checkIfBlobExists(blobUrl);
 
-    if (exists) {
-        return blobUrl;
-    }
+    // if (exists) {
+    //     return blobUrl;
+    // }
 
     const notionUrl = await getDatabaseCoverImageUrl(db);
     if (!notionUrl) {
