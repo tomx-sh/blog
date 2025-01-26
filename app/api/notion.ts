@@ -180,7 +180,7 @@ export const getPageContentImageBlobUrl = cache(async (imageUrl: string) => {
     // Let's remove all the slashes from the filename
     const fileName = fileNameData.replace(/\//g, '');
 
-    const blob = await uploadImageToBlob({ imageUrl, fileName });
+    const blob = await uploadImageToBlob({ imageUrl, fileName, skipCheckIfExists: true });
     return blob?.url;
 })
 
@@ -209,7 +209,7 @@ export const getPageCoverImageBlobUrl = cache(async (pageId: string) => {
         return undefined;
     }
 
-    const blob = await uploadImageToBlob({ imageUrl: notionUrl, fileName: filename, skipCheckIfExists: false });
+    const blob = await uploadImageToBlob({ imageUrl: notionUrl, fileName: filename, skipCheckIfExists: true });
     return blob?.url;
 })
 
