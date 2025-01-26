@@ -192,12 +192,12 @@ export const getPageCoverImageBlobUrl = cache(async (pageId: string) => {
 
     // Check if the image already exists in the blob
     const { url: blobUrl, filename: filename } = await makeCoverImageBlobUrl(pageId); // If it exists, it will be at this url
-    if (blobUrl) {
-        const exists = await checkIfBlobExists(blobUrl);
-        if (exists) {
-            return blobUrl;
-        }
-    }
+    // if (blobUrl) {
+    //     const exists = await checkIfBlobExists(blobUrl);
+    //     if (exists) {
+    //         return blobUrl;
+    //     }
+    // }
 
     if (!filename) {
         console.error('Filename is undefined');
