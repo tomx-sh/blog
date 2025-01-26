@@ -45,6 +45,7 @@ function CustomParagraph(props: any) {
 
 async function CustomImage(props: any) {
     const imageUrl = await getPageContentImageBlobUrl(props.src);
+    const isPng = imageUrl?.includes('.png');
     return (
         /* eslint-disable-next-line @next/next/no-img-element */
         <img
@@ -55,8 +56,8 @@ async function CustomImage(props: any) {
                 position: 'relative',
                 left: '50%',
                 transform: 'translateX(-50%)',
-                borderRadius: 'var(--radius-2)',
-                boxShadow: 'var(--shadow-3)',
+                borderRadius: isPng ? '0' : 'var(--radius-2)',
+                boxShadow: isPng ? 'none' : 'var(--shadow-3)',
             }}
         />
     )
