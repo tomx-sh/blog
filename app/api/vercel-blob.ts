@@ -25,19 +25,19 @@ export async function uploadImageToBlob({ imageUrl, fileName, skipCheckIfExists=
     }
 
     // Before uploading the image, check if it already exists in the blob storage
-    if(!skipCheckIfExists) {
-        const basePath = process.env.BLOB_BASE_URL
-        if (!basePath) {
-            console.error('BLOB_BASE_URL is not defined in the environment variables');
-            return undefined;
-        }
-        const blobUrl = `${basePath}/${fileName}`;
-        const imageExists = await checkIfBlobExists(blobUrl);
-        if (imageExists) {
-            console.log('Image already exists in blob:', fileName);
-            return imageExists;
-        }
-    }
+    // if(!skipCheckIfExists) {
+    //     const basePath = process.env.BLOB_BASE_URL
+    //     if (!basePath) {
+    //         console.error('BLOB_BASE_URL is not defined in the environment variables');
+    //         return undefined;
+    //     }
+    //     const blobUrl = `${basePath}/${fileName}`;
+    //     const imageExists = await checkIfBlobExists(blobUrl);
+    //     if (imageExists) {
+    //         console.log('Image already exists in blob:', fileName);
+    //         return imageExists;
+    //     }
+    // }
 
     // If it doesn't exist, fetch the image and upload it to the blob storage
 
