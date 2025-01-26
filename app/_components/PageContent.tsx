@@ -7,9 +7,10 @@ import { Suspense } from 'react';
 
 async function PageContentS({ page_id }: { page_id: string }) {
     const mdString = await getMarkdown(page_id);
+    const escapedString = mdString.replace(/{/g, '&#123;').replace(/}/g, '&#125;');
 
     return (
-        <MDXRemote source={mdString} components={customComponents} />
+        <MDXRemote source={escapedString} components={customComponents} />
     )
 }
 
