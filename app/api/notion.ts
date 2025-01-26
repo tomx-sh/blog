@@ -283,7 +283,7 @@ export const getDatabaseCoverImageBlobUrl = cache(async (db: Db) => {
         return undefined;
     }
 
-    const blob = await uploadImageToBlob({ imageUrl: notionUrl, fileName: filename });
+    const blob = await uploadImageToBlob({ imageUrl: notionUrl, fileName: filename, skipCheckIfExists: true });
 
     return blob?.url;
 })
