@@ -209,7 +209,7 @@ export const getPageCoverImageBlobUrl = cache(async (pageId: string) => {
         return undefined;
     }
 
-    const blob = await uploadImageToBlob({ imageUrl: notionUrl, fileName: filename, skipCheckIfExists: true });
+    const blob = await uploadImageToBlob({ imageUrl: notionUrl, fileName: filename, skipCheckIfExists: false });
     return blob?.url;
 })
 
